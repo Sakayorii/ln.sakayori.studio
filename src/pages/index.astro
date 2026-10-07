@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+
+const novels = await getCollection('novels');
+const chapters = await getCollection('chapters');
+
+const shelf = novels.map((n) => {
+  const list = chapters
+    .filter((c) => c.data.novel === n.id)
+    .sort((a, b) => a.data.arc - b.data.arc || a.data.chapter - b.data.chapter);
+  const arcs = new Set(list.map((c) => c.data.arc)).size;
+  const latest = list[list.length - 1];
+  return { novel: n, count: list.length, arcs, latest };
+});
+---
+<BaseLayout title="Thư viện Light Novel - Sakayori Studio">
+  <SiteHeader />
+  <main class="wrap">
+    <section class="hero">
+      <p class="kicker">Sakayori Studio</p>
+      <h1>Thư viện<br />Light Novel</h1>
+      <p class="sub">Bản dịch tiếng Việt · Phi lợi nhuận · Dịu mắt như sách giấy</p>
+    </section>
+
+    <div class="resume-card" id="resume-card" aria-live="polite">
+      <span class="label">Đang đọc dở</span>
+      <span id="resume-text" style="font-size:17px;"></span>
+      <a class="btn" id="resume-link" href="#">Đọc tiếp</a>
+    </div>
+
+    <div class="shelf-head">
+      <h2>Kệ sách</h2>
+      <span class="count">{shelf.length} TÁC PHẨM</span>
+    </div>
+
+    {shelf.map(({ novel, count, arcs, latest }, i) => (
+      <a class="novel-row" href={`/${novel.id}/`}>
+        <span class="novel-idx">{String(i + 1).padStart(2, '0')}</span>
+        <span>
+          <h3 class="novel-title">{novel.data.title}</h3>
+          {novel.data.originalTitle && <p class="novel-orig">{novel.data.originalTitle}</p>}
+          <p class="novel-meta">
+            <span>{novel.data.author}</span><span>·</span>
+            <span>{arcs} arc</span><span>·</span>
+            <span>{count} chương</span>
+            <span class="badge">{novel.data.status === 'ongoing' ? 'Đang tiến hành' : novel.data.status === 'completed' ? 'Hoàn thành' : 'Tạm nghỉ'}</span>
+            {latest && <span class="badge new">Mới: Ch.{latest.data.chapter}</span>}
+          </p>
+        </span>
+        <span class="novel-go">Vào đọc →</span>
+      </a>
+    ))}
+
+    <hr class="rule" />
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot-brand"><img src="/logo.svg" alt="" width="22" height="22" /> SAKAYORI STUDIO</div>
+      <p class="disclaimer">
+        Bản dịch tiếng Việt phi thương mại được thực hiện bởi Sakayori Studio phục vụ mục đích
+        đọc và học tập phi lợi nhuận. Toàn bộ bản quyền tác phẩm gốc và minh họa thuộc về các
+        tác giả và nhà xuất bản gốc. Vui lòng mua sách gốc để ủng hộ tác giả khi có điều kiện.
+      </p>
+    </div>
+  </footer>
+</BaseLayout>
+
+<script>
+  import { loadResume } from '../utils/reader-settings';
+  const r = loadResume();
+  if (r) {
+    const card = document.getElementById('resume-card');
+    const text = document.getElementById('resume-text');
+    const link = document.getElementById('resume-link') as HTMLAnchorElement;
+    if (card && text && link) {
+      text.textContent = `${r.novelTitle} · Arc ${r.arc} · Chương ${r.chapter}: ${r.chapterTitle}`;
+      link.href = r.url;
+      card.classList.add('show');
+    }
+  }
+</script>

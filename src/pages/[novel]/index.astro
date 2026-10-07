@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+
+export async function getStaticPaths() {
+  const novels = await getCollection('novels');
+  return novels.map((n) => ({ params: { novel: n.id }, props: { novel: n } }));
+}
+
+const { novel } = Astro.props;
+const chapters = (await getCollection('chapters', ({ data }) => data.novel === novel.id))
+  .sort((a, b) => a.data.arc - b.data.arc || a.data.chapter - b.data.chapter);
+
+const arcs = new Map<number, typeof chapters>();
+for (const c of chapters) {
+  if (!arcs.has(c.data.arc)) arcs.set(c.data.arc, []);
+  arcs.get(c.data.arc)!.push(c);
+}
+const latest = chapters[chapters.length - 1];
+const chUrl = (c: (typeof chapters)[number]) => `/${novel.id}/arc-${c.data.arc}/chuong-${c.data.chapter}`;
+---
+<BaseLayout
+  title={`${novel.data.title} - Sakayori Studio`}
+  description={novel.data.summary.slice(0, 150)}
+>
+  <SiteHeader />
+  <main class="wrap">
+    <section class="novel-hero">
+      <p class="kicker">Tác phẩm</p>
+      <h1>{novel.data.title}</h1>
+      {novel.data.originalTitle && <p class="orig">{novel.data.originalTitle}</p>}
+      <p class="novel-meta" style="margin-bottom:16px;">
+        <span>Tác giả: {novel.data.author}</span><span>·</span>
+        <span>Chuyển ngữ: {novel.data.translator}</span><span>·</span>
+        <span class="badge">{novel.data.status === 'ongoing' ? 'Đang tiến hành' : 'Hoàn thành'}</span>
+      </p>
+      <p class="summary">{novel.data.summary}</p>
+      {chapters.length > 0 && (
+        <p style="margin-top:24px;">
+          <a class="btn" href={chUrl(chapters[0])}>Đọc từ chương đầu</a>
+        </p>
+      )}
+    </section>
+
+    <hr class="rule" />
+
+    <h2 style="font-size:24px;margin:0 0 8px;">Mục lục</h2>
+    {[...arcs.entries()].map(([arc, list]) => (
+      <details class="arc" open={arc === latest?.data.arc}>
+        <summary>
+          <h3 class="arc-title">Arc {arc}</h3>
+          <span class="arc-count">{list.length} CHƯƠNG</span>
+        </summary>
+        <ul class="chapter-list">
+          {list.map((c) => (
+            <li>
+              <a href={chUrl(c)}>
+                <span class="ch-num">Chương {c.data.chapter}</span>
+                <span class="ch-title">{c.data.title}</span>
+                {latest && c.id === latest.id && <span class="badge new">Mới</span>}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    ))}
+
+    <hr class="rule" />
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot-brand"><img src="/logo.svg" alt="" width="22" height="22" /> SAKAYORI STUDIO</div>
+      <p class="disclaimer">
+        Bản dịch tiếng Việt phi thương mại được thực hiện bởi Sakayori Studio phục vụ mục đích
+        đọc và học tập phi lợi nhuận. Toàn bộ bản quyền tác phẩm gốc và minh họa thuộc về các
+        tác giả và nhà xuất bản gốc. Vui lòng mua sách gốc để ủng hộ tác giả khi có điều kiện.
+      </p>
+    </div>
+  </footer>
+</BaseLayout>

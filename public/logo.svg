@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="sakayori-grad-left" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b45309" />
+      <stop offset="100%" stop-color="#78350f" />
+    </linearGradient>
+    <linearGradient id="sakayori-grad-right" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#292524" />
+      <stop offset="100%" stop-color="#1c1917" />
+    </linearGradient>
+    <filter id="subtle-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.12" />
+    </filter>
+  </defs>
+
+  <!-- Background Emblem Circle -->
+  <circle cx="256" cy="256" r="236" fill="#fdfbf7" stroke="#e7e0d3" stroke-width="4" filter="url(#subtle-shadow)" />
+
+  <!-- Inner Geometric Ring -->
+  <circle cx="256" cy="256" r="212" fill="none" stroke="#d5c8b5" stroke-width="1.5" stroke-dasharray="4 6" />
+
+  <!-- The Open Book & Origami Crane Crest (Abstract S-Monogram) -->
+  <g transform="translate(256, 230)">
+    <!-- Left Leaf / Open Page (Warm Amber Leaf) -->
+    <path d="M-8,60 C-60,50 -120,-10 -110,-90 C-105,-130 -60,-140 -20,-90 C-5,-70 -5,20 -8,60 Z" 
+          fill="url(#sakayori-grad-left)" />
+
+    <!-- Right Leaf / Turning Page (Charcoal Ink Leaf) -->
+    <path d="M8,-60 C60,-50 120,10 110,90 C105,130 60,140 20,90 C5,70 5,-20 8,-60 Z" 
+          fill="url(#sakayori-grad-right)" />
+
+    <!-- Center Fold Spine / Quill Meridian (Negative Space & Gilded Core) -->
+    <path d="M-2,-110 C-1,-60 -1,60 -2,110 C2,60 2,-60 2,-110 Z" 
+          fill="#d97706" />
+
+    <!-- Delicate Horizon Accent Marks -->
+    <circle cx="0" cy="-125" r="5" fill="#b45309" />
+    <circle cx="0" cy="125" r="5" fill="#292524" />
+  </g>
+
+  <!-- Typography: SAKAYORI STUDIO -->
+  <!-- Top Arch Arc (Subtle Japanese Motif) -->
+  <text x="256" y="395" 
+        text-anchor="middle" 
+        font-family="'Noto Serif', 'Cinzel', 'Times New Roman', serif" 
+        font-size="28" 
+        font-weight="700" 
+        letter-spacing="9" 
+        fill="#1c1917">SAKAYORI</text>
+
+  <!-- Subtitle: STUDIO / LIGHT NOVEL -->
+  <text x="256" y="425" 
+        text-anchor="middle" 
+        font-family="'Be Vietnam Pro', -apple-system, sans-serif" 
+        font-size="13" 
+        font-weight="600" 
+        letter-spacing="12" 
+        fill="#92400e">STUDIO</text>
+</svg>

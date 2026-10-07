@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor">
+  <!-- Outer Ring -->
+  <path d="M256,20 C125.66,20 20,125.66 20,256 C20,386.34 125.66,492 256,492 C386.34,492 492,386.34 492,256 C492,125.66 386.34,20 256,20 Z M256,472 C136.71,472 40,375.29 40,256 C40,136.71 136.71,40 256,40 C375.29,40 472,136.71 472,256 C472,375.29 375.29,472 256,472 Z" />
+  
+  <!-- Stylized Book & Crane Emblem -->
+  <g transform="translate(256, 230)">
+    <path d="M-10,60 C-60,50 -120,-10 -110,-90 C-105,-130 -60,-140 -20,-90 C-5,-70 -5,20 -10,60 Z" />
+    <path d="M10,-60 C60,-50 120,10 110,90 C105,130 60,140 20,90 C5,70 5,-20 10,-60 Z" />
+    <path d="M-3,-115 L3,-115 L3,115 L-3,115 Z" />
+  </g>
+
+  <!-- Typography Block -->
+  <text x="256" y="395" 
+        text-anchor="middle" 
+        font-family="'Noto Serif', serif" 
+        font-size="28" 
+        font-weight="700" 
+        letter-spacing="9">SAKAYORI</text>
+  <text x="256" y="425" 
+        text-anchor="middle" 
+        font-family="sans-serif" 
+        font-size="13" 
+        font-weight="600" 
+        letter-spacing="12">STUDIO</text>
+</svg>

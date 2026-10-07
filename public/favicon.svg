@@ -1,21 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
   <defs>
-    <linearGradient id="fav-grad-left" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#b45309" />
-      <stop offset="100%" stop-color="#78350f" />
-    </linearGradient>
-    <linearGradient id="fav-grad-right" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#292524" />
-      <stop offset="100%" stop-color="#1c1917" />
+    <linearGradient id="fav-amber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#b45309" />
     </linearGradient>
   </defs>
-  <rect width="128" height="128" rx="28" fill="#f4ecd8" />
-  <g transform="translate(64, 64) scale(0.42)">
+  <!-- High Contrast Tile: Deep Charcoal (#1c1917) pops on both light & dark browser tabs -->
+  <rect width="128" height="128" rx="28" fill="#1c1917" stroke="#292524" stroke-width="2" />
+  
+  <!-- Stylized Monogram S / Book Leaf Crest -->
+  <g transform="translate(64, 64) scale(0.44)">
     <path d="M-8,60 C-60,50 -120,-10 -110,-90 C-105,-130 -60,-140 -20,-90 C-5,-70 -5,20 -8,60 Z" 
-          fill="url(#fav-grad-left)" />
+          fill="url(#fav-amber)" />
     <path d="M8,-60 C60,-50 120,10 110,90 C105,130 60,140 20,90 C5,70 5,-20 8,-60 Z" 
-          fill="url(#fav-grad-right)" />
+          fill="#fafaf9" opacity="0.9" />
     <path d="M-2,-110 C-1,-60 -1,60 -2,110 C2,60 2,-60 2,-110 Z" 
-          fill="#d97706" />
+          fill="#f59e0b" />
   </g>
 </svg>

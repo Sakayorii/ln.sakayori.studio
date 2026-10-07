@@ -1,0 +1,39 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import '../styles/reader.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
+---
+<BaseLayout title={title} description={description}>
+  <Fragment slot="head">
+    <script is:inline>
+      /* Zero-FOUC: apply saved reader settings before first paint. */
+      try {
+        var s = JSON.parse(localStorage.getItem('ln-reader-settings') || '{}');
+        var P = {
+          hako: ['#f4ecd8', '#3d3428'],
+          cream: ['#faf7ef', '#2c2c2c'],
+          gray: ['#d8d8d8', '#333333'],
+          dark: ['#18181b', '#d4d4d8'],
+        };
+        var p = P[s.bg] || P.hako;
+        var r = document.documentElement.style;
+        r.setProperty('--read-bg', p[0]);
+        r.setProperty('--read-fg', p[1]);
+        r.setProperty('--read-font', s.font === 'sans'
+          ? "'Be Vietnam Pro','Noto Sans',system-ui,sans-serif"
+          : "'Noto Serif',Georgia,serif");
+        if (s.size) r.setProperty('--read-size', Math.min(24, Math.max(15, +s.size)) + 'px');
+        if (s.lh) r.setProperty('--read-lh', s.lh);
+        if (s.width) r.setProperty('--read-width', s.width + 'px');
+      } catch (e) { /* defaults apply */ }
+    </script>
+  </Fragment>
+  <div class="reader-shell">
+    <slot />
+  </div>
+</BaseLayout>

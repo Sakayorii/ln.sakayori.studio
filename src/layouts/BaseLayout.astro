@@ -1,0 +1,43 @@
+---
+import '../styles/global.css';
+import SearchModal from '../components/SearchModal.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+const {
+  title,
+  description = 'Cổng đọc light novel phi lợi nhuận của Sakayori Studio. Bản dịch tiếng Việt.',
+  ogImage = 'https://ln.sakayori.studio/og-cover.png',
+} = Astro.props;
+const canonical = Astro.url.href;
+---
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Sakayori Studio" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:url" content={canonical} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+  <slot name="head" />
+</head>
+<body>
+  <slot />
+  <div class="toast" role="status" aria-live="polite"></div>
+  <SearchModal />
+</body>
+</html>

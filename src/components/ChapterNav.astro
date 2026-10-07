@@ -1,0 +1,59 @@
+---
+interface Link { url: string; label: string }
+interface Props {
+  prev: Link | null;
+  next: Link | null;
+  siblings: { chapter: number; title: string; url: string }[];
+  current: number;
+  bottom?: boolean;
+}
+const { prev, next, siblings, current, bottom = false } = Astro.props;
+const novelHome = siblings.length ? siblings[0].url.split('/').slice(0, 2).join('/') + '/' : '/';
+---
+<nav class={`chapter-nav${bottom ? ' bottom' : ''}`} aria-label={bottom ? 'Điều hướng cuối chương' : 'Điều hướng đầu chương'}>
+  {prev
+    ? <a class="nav-btn" href={prev.url} rel="prev">← Chương trước</a>
+    : <span class="nav-btn disabled" aria-hidden="true">← Chương trước</span>}
+
+  {!bottom && (
+    <select class="jump-select" aria-label="Nhảy nhanh đến chương" onchange="if(this.value)location.href=this.value">
+      {siblings.map((s) => (
+        <option value={s.url} selected={s.chapter === current}>
+          Ch. {s.chapter}: {s.title.length > 34 ? s.title.slice(0, 34) + '…' : s.title}
+        </option>
+      ))}
+    </select>
+  )}
+  {bottom && <a class="nav-btn ghost" href={novelHome}>Mục lục</a>}
+
+  {next
+    ? <a class="nav-btn" href={next.url} rel="next">Chương sau →</a>
+    : <span class="nav-btn disabled" aria-hidden="true">Chương sau →</span>}
+</nav>
+
+{bottom && (
+  <div style="text-align:center;margin:0 0 8px;">
+    <button class="nav-btn ghost" id="copy-link-btn" style="font-size:13px;padding:8px 14px;">Sao chép liên kết chương</button>
+  </div>
+  <script>
+    import { showToast } from '../utils/reader-settings';
+    document.getElementById('copy-link-btn')?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(location.href);
+        showToast('Đã sao chép liên kết chương.');
+      } catch { showToast('Không sao chép được liên kết.'); }
+    });
+    // keyboard: ← / → to move between chapters (ignored while typing)
+    document.addEventListener('keydown', (e) => {
+      const t = e.target as HTMLElement;
+      if (t.closest('input, textarea, select, [contenteditable]')) return;
+      if (e.key === 'ArrowLeft') {
+        const a = document.querySelector('a[rel="prev"]') as HTMLAnchorElement | null;
+        if (a) location.href = a.href;
+      } else if (e.key === 'ArrowRight') {
+        const a = document.querySelector('a[rel="next"]') as HTMLAnchorElement | null;
+        if (a) location.href = a.href;
+      }
+    });
+  </script>
+)}

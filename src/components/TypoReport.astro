@@ -1,0 +1,93 @@
+---
+/* Typo report: select text in the chapter body -> floating button -> modal -> POST /api/typo-reports */
+interface Props { novel: string; arc: number; chapter: number; }
+const { novel, arc, chapter } = Astro.props;
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
+---
+<button class="typo-fab" id="typo-fab">Báo lỗi chính tả</button>
+
+<div class="modal" id="typo-modal" role="dialog" aria-modal="true" aria-label="Báo lỗi chính tả">
+  <div class="modal-card">
+    <h3>Báo lỗi chính tả</h3>
+    <p class="quote" id="typo-quote"></p>
+    <textarea id="typo-note" maxlength="300" placeholder="Ghi chú thêm (không bắt buộc). Ví dụ: sai từ X thành Y"></textarea>
+    <input type="text" id="typo-hp" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+    <div class="turnstile-slot" id="typo-turnstile"></div>
+    <div class="modal-actions">
+      <button class="nav-btn ghost" id="typo-cancel">Hủy</button>
+      <button class="nav-btn" id="typo-send">Gửi báo cáo</button>
+    </div>
+  </div>
+</div>
+
+<script define:vars={{ novel, arc, chapter, siteKey }}>
+  import { showToast } from '../utils/reader-settings';
+  const fab = document.getElementById('typo-fab') as HTMLButtonElement;
+  const modal = document.getElementById('typo-modal') as HTMLElement;
+  const quote = document.getElementById('typo-quote') as HTMLElement;
+  const note = document.getElementById('typo-note') as HTMLTextAreaElement;
+  const body = document.getElementById('chapter-body') as HTMLElement;
+  const t0 = Date.now();
+  let selected = '';
+
+  // Turnstile (explicit render, only if site key configured)
+  let tsWidget;
+  function ensureTurnstile() {
+    if (!siteKey || tsWidget !== undefined) return;
+    const slot = document.getElementById('typo-turnstile');
+    if ((window as any).turnstile && slot) {
+      tsWidget = (window as any).turnstile.render(slot, { sitekey: siteKey });
+    }
+  }
+
+  document.addEventListener('selectionchange', () => {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed || !body.contains(sel.anchorNode)) { fab.classList.remove('show'); return; }
+    selected = sel.toString().trim().slice(0, 200);
+    if (selected.length < 2) { fab.classList.remove('show'); return; }
+    const r = sel.getRangeAt(0).getBoundingClientRect();
+    fab.style.top = `${window.scrollY + r.top - 46}px`;
+    fab.style.left = `${Math.min(window.scrollX + r.left, window.innerWidth - 170)}px`;
+    fab.classList.add('show');
+  });
+  document.addEventListener('scroll', () => fab.classList.remove('show'), { passive: true });
+
+  fab.addEventListener('click', () => {
+    quote.textContent = '“' + selected + '”';
+    note.value = '';
+    modal.classList.add('open');
+    ensureTurnstile();
+  });
+  (document.getElementById('typo-cancel') as HTMLButtonElement).addEventListener('click', () => {
+    modal.classList.remove('open');
+  });
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('open'); });
+
+  (document.getElementById('typo-send') as HTMLButtonElement).addEventListener('click', async () => {
+    const btn = document.getElementById('typo-send') as HTMLButtonElement;
+    btn.disabled = true;
+    try {
+      const token = siteKey && (window as any).turnstile && tsWidget !== undefined
+        ? (window as any).turnstile.getResponse(tsWidget) : '';
+      const res = await fetch('/api/typo-reports', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          novel, arc, chapter,
+          selected_text: selected,
+          user_note: note.value.trim().slice(0, 300) || null,
+          website_url: (document.getElementById('typo-hp') as HTMLInputElement).value, // honeypot
+          t0, turnstileToken: token,
+        }),
+      });
+      if (res.status === 429) { showToast('Bạn gửi quá nhanh. Thử lại sau một lúc.'); return; }
+      if (!res.ok) throw new Error();
+      modal.classList.remove('open');
+      window.getSelection()?.removeAllRanges();
+      showToast('Cảm ơn bạn đã đóng góp. Báo cáo lỗi đã được gửi đến ban biên tập.');
+    } catch {
+      showToast('Gửi báo cáo chưa thành công. Thử lại sau.');
+    } finally { btn.disabled = false; }
+  });
+</script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>

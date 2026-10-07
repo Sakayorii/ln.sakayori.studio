@@ -1,0 +1,89 @@
+---
+/* Global Pagefind search modal. Opened by any [data-open-search] button. */
+---
+<div class="search-modal" id="search-modal" role="dialog" aria-modal="true" aria-label="Tìm kiếm">
+  <div class="search-box">
+    <input id="pagefind-input" type="search" placeholder="Gõ tên chương, số arc..." autocomplete="off" />
+    <div id="pagefind-results"></div>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('search-modal') as HTMLElement;
+  const input = document.getElementById('pagefind-input') as HTMLInputElement;
+  const results = document.getElementById('pagefind-results') as HTMLElement;
+  let pagefind: any = null;
+  let opened = false;
+
+  // Pagefind ships a UMD bundle: load it with a plain <script> tag,
+  // never with import(), so Vite never tries to resolve it at build time.
+  function loadPagefind(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const w = window as any;
+      if (w.pagefind) return resolve(w.pagefind);
+      const s = document.createElement('script');
+      s.src = '/pagefind/pagefind.js';
+      s.onload = async () => {
+        try {
+          await w.pagefind.init();
+          resolve(w.pagefind);
+        } catch (e) { reject(e); }
+      };
+      s.onerror = () => reject(new Error('pagefind load failed'));
+      document.head.appendChild(s);
+    });
+  }
+
+  async function ensurePagefind() {
+    if (pagefind) return pagefind;
+    try {
+      pagefind = await loadPagefind();
+    } catch { pagefind = null; }
+    return pagefind;
+  }
+
+  async function onInput() {
+    const q = input.value.trim();
+    results.innerHTML = '';
+    if (!q) return;
+    const pf = await ensurePagefind();
+    if (!pf) { results.innerHTML = '<p>Tìm kiếm chưa sẵn sàng.</p>'; return; }
+    const res = await pf.search(q);
+    const list = await Promise.all(res.results.slice(0, 12).map((r: any) => r.data()));
+    if (!list.length) { results.innerHTML = '<p>Không tìm thấy kết quả.</p>'; return; }
+    const ul = document.createElement('ul');
+    ul.style.cssText = 'list-style:none;margin:0;padding:0;';
+    for (const item of list) {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = item.url;
+      a.textContent = item.meta?.title || item.url;
+      a.style.cssText = 'display:block;padding:10px 0;border-top:1px dotted var(--line);text-decoration:none;font-size:16px;';
+      li.appendChild(a);
+      ul.appendChild(li);
+    }
+    results.appendChild(ul);
+  }
+
+  function open() {
+    opened = true;
+    modal.classList.add('open');
+    input.value = '';
+    results.innerHTML = '';
+    ensurePagefind();
+    setTimeout(() => input.focus(), 30);
+  }
+  function close() { opened = false; modal.classList.remove('open'); }
+
+  document.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    if (t.closest('[data-open-search]')) open();
+    else if (opened && t === modal) close();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && opened) close();
+    if ((e.key === 'k' && (e.metaKey || e.ctrlKey))) { e.preventDefault(); open(); }
+  });
+  let deb: number | undefined;
+  input.addEventListener('input', () => { clearTimeout(deb); deb = window.setTimeout(onInput, 180); });
+</script>

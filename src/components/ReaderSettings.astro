@@ -1,0 +1,102 @@
+---
+/* Floating gear button + settings popover. All state flows through reader-settings.ts */
+---
+<button class="gear-btn" id="gear-btn" aria-label="Cài đặt đọc truyện" aria-expanded="false">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="3.2"/>
+    <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.04-1.56 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.04H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 8.96a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34h.09A1.7 1.7 0 0 0 10.04 3V3a2 2 0 1 1 4 0v.09c0 .68.4 1.3 1.04 1.56.6.26 1.3.11 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87v.09c.26.6.88 1.04 1.56 1.04H21a2 2 0 1 1 0 4h-.09c-.68 0-1.3.4-1.51 1.04z"/>
+  </svg>
+</button>
+
+<div class="settings-panel" id="settings-panel" role="dialog" aria-label="Cài đặt đọc truyện">
+  <h3>Màu nền</h3>
+  <div class="swatches" id="bg-swatches"></div>
+
+  <h3>Font chữ</h3>
+  <div class="seg" id="font-seg">
+    <button data-font="serif">Serif</button>
+    <button data-font="sans">Sans</button>
+  </div>
+
+  <h3>Cỡ chữ</h3>
+  <div class="stepper">
+    <button id="size-dec" aria-label="Giảm cỡ chữ">A-</button>
+    <span class="val" id="size-val">18px</span>
+    <button id="size-inc" aria-label="Tăng cỡ chữ">A+</button>
+  </div>
+
+  <h3>Giãn dòng</h3>
+  <div class="seg" id="lh-seg">
+    <button data-lh="1.5">Hẹp</button>
+    <button data-lh="1.8">Vừa</button>
+    <button data-lh="2.1">Thoáng</button>
+  </div>
+
+  <h3>Khổ chữ</h3>
+  <div class="seg" id="width-seg">
+    <button data-width="650">Gọn</button>
+    <button data-width="750">Chuẩn</button>
+    <button data-width="900">Rộng</button>
+  </div>
+
+  <button class="settings-reset" id="settings-reset">Đặt lại mặc định</button>
+</div>
+
+<script>
+  import { loadSettings, saveSettings, applySettings, PRESETS, DEFAULTS, type ReaderSettings } from '../utils/reader-settings';
+
+  const gear = document.getElementById('gear-btn') as HTMLButtonElement;
+  const panel = document.getElementById('settings-panel') as HTMLElement;
+  let s: ReaderSettings = loadSettings();
+
+  function paint() {
+    // swatches
+    const sw = document.getElementById('bg-swatches')!;
+    sw.innerHTML = '';
+    (Object.keys(PRESETS) as ReaderSettings['bg'][]).forEach((key) => {
+      const b = document.createElement('button');
+      b.className = 'swatch' + (s.bg === key ? ' active' : '');
+      b.title = PRESETS[key].label;
+      b.setAttribute('aria-label', PRESETS[key].label);
+      b.style.background = PRESETS[key].bg;
+      b.style.borderColor = key === s.bg ? '' : 'rgba(42,33,24,.25)';
+      b.addEventListener('click', () => { s.bg = key; commit(); });
+      sw.appendChild(b);
+    });
+    const seg = (id: string, attr: string, val: string | number) => {
+      document.querySelectorAll(`#${id} button`).forEach((btn) => {
+        btn.classList.toggle('active', (btn as HTMLElement).dataset[attr] == String(val));
+      });
+    };
+    seg('font-seg', 'font', s.font);
+    seg('lh-seg', 'lh', s.lh);
+    seg('width-seg', 'width', s.width);
+    (document.getElementById('size-val') as HTMLElement).textContent = `${s.size}px`;
+  }
+
+  function commit() { applySettings(s); saveSettings(s); paint(); }
+
+  document.querySelectorAll('#font-seg button').forEach((b) =>
+    b.addEventListener('click', () => { s.font = (b as HTMLElement).dataset.font as 'serif' | 'sans'; commit(); }));
+  document.querySelectorAll('#lh-seg button').forEach((b) =>
+    b.addEventListener('click', () => { s.lh = parseFloat((b as HTMLElement).dataset.lh!); commit(); }));
+  document.querySelectorAll('#width-seg button').forEach((b) =>
+    b.addEventListener('click', () => { s.width = parseInt((b as HTMLElement).dataset.width!, 10); commit(); }));
+  document.getElementById('size-dec')!.addEventListener('click', () => { s.size = Math.max(15, s.size - 1); commit(); });
+  document.getElementById('size-inc')!.addEventListener('click', () => { s.size = Math.min(24, s.size + 1); commit(); });
+  document.getElementById('settings-reset')!.addEventListener('click', () => { s = { ...DEFAULTS }; commit(); });
+
+  function toggle(force?: boolean) {
+    const open = force ?? !panel.classList.contains('open');
+    panel.classList.toggle('open', open);
+    gear.setAttribute('aria-expanded', String(open));
+  }
+  gear.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
+  document.addEventListener('click', (e) => {
+    if (panel.classList.contains('open') && !(e.target as HTMLElement).closest('#settings-panel')) toggle(false);
+  });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggle(false); });
+
+  applySettings(s);
+  paint();
+</script>

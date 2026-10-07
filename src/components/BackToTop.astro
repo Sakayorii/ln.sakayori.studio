@@ -1,0 +1,13 @@
+--- /* Back to top: appears after 30% of page scrolled. */ ---
+<button class="to-top" id="to-top" aria-label="Về đầu trang">↑</button>
+<script>
+  const btn = document.getElementById('to-top') as HTMLButtonElement;
+  function update() {
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    btn.classList.toggle('show', max > 0 && h.scrollTop / max > 0.3);
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  update();
+</script>

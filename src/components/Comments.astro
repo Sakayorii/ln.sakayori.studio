@@ -4,7 +4,8 @@ interface Props { novel: string; arc: number; chapter: number; }
 const { novel, arc, chapter } = Astro.props;
 const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
 ---
-<section class="comments" id="comments" aria-label="Bình luận">
+<section class="comments" id="comments" aria-label="Bình luận"
+  data-novel={novel} data-arc={arc} data-chapter={chapter} data-sitekey={siteKey}>
   <h2>Bình luận</h2>
   <p class="mod-note">Bình luận sẽ hiển thị sau khi được ban biên tập duyệt.</p>
   <div id="comment-list"><p class="mod-note">Đang tải bình luận…</p></div>
@@ -22,8 +23,13 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
   </form>
 </section>
 
-<script define:vars={{ novel, arc, chapter, siteKey }}>
+<script>
   import { showToast } from '../utils/reader-settings';
+  const section = document.getElementById('comments') as HTMLElement;
+  const novel = section.dataset.novel!;
+  const arc = parseInt(section.dataset.arc!, 10);
+  const chapter = parseInt(section.dataset.chapter!, 10);
+  const siteKey = section.dataset.sitekey || '';
   const list = document.getElementById('comment-list') as HTMLElement;
   const form = document.getElementById('comment-form') as HTMLFormElement;
   const t0 = Date.now();

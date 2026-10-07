@@ -65,6 +65,9 @@ const description = excerpt.length > 20 ? excerpt : `Đọc chương ${chapter} 
   <SiteHeader />
 
   <main class="chapter-wrap">
+    <div id="resume-state" hidden
+      data-novel={novel} data-noveltitle={novelTitle} data-arc={arc}
+      data-chapter={chapter} data-chaptertitle={title}></div>
     <!-- Pagefind indexes ONLY this metadata block, never the full chapter text -->
     <div data-pagefind-body data-pagefind-meta="title:{pageTitle}">
       <ChapterHeader
@@ -108,8 +111,14 @@ const description = excerpt.length > 20 ? excerpt : `Đọc chương ${chapter} 
   <BackToTop />
 </ReaderLayout>
 
-<script define:vars={{ novel, novelTitle, arc, chapter, chapterTitle: title }}>
+<script>
   import { saveResume, loadResume } from '../../../utils/reader-settings';
+  const rs = document.getElementById('resume-state') as HTMLElement;
+  const novel = rs.dataset.novel!;
+  const novelTitle = rs.dataset.noveltitle!;
+  const arc = parseInt(rs.dataset.arc!, 10);
+  const chapter = parseInt(rs.dataset.chapter!, 10);
+  const chapterTitle = rs.dataset.chaptertitle!;
   const url = `/${novel}/arc-${arc}/chuong-${chapter}`;
   // restore scroll position
   const saved = loadResume();

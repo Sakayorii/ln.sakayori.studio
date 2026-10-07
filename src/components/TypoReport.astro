@@ -4,7 +4,8 @@ interface Props { novel: string; arc: number; chapter: number; }
 const { novel, arc, chapter } = Astro.props;
 const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
 ---
-<button class="typo-fab" id="typo-fab">Báo lỗi chính tả</button>
+<button class="typo-fab" id="typo-fab"
+  data-novel={novel} data-arc={arc} data-chapter={chapter} data-sitekey={siteKey}>Báo lỗi chính tả</button>
 
 <div class="modal" id="typo-modal" role="dialog" aria-modal="true" aria-label="Báo lỗi chính tả">
   <div class="modal-card">
@@ -20,9 +21,13 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
   </div>
 </div>
 
-<script define:vars={{ novel, arc, chapter, siteKey }}>
+<script>
   import { showToast } from '../utils/reader-settings';
   const fab = document.getElementById('typo-fab') as HTMLButtonElement;
+  const novel = fab.dataset.novel!;
+  const arc = parseInt(fab.dataset.arc!, 10);
+  const chapter = parseInt(fab.dataset.chapter!, 10);
+  const siteKey = fab.dataset.sitekey || '';
   const modal = document.getElementById('typo-modal') as HTMLElement;
   const quote = document.getElementById('typo-quote') as HTMLElement;
   const note = document.getElementById('typo-note') as HTMLTextAreaElement;

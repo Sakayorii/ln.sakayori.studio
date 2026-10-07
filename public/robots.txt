@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ln.sakayori.studio/sitemap-index.xml

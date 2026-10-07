@@ -1,0 +1,21 @@
+name = "ln-sakayori-studio"
+compatibility_date = "2026-10-01"
+
+# D1 database for comments + typo reports.
+# Create it once, then paste the id below:
+#   npx wrangler d1 create ln-sakayori-db
+# Then apply schema:
+#   npx wrangler d1 execute ln-sakayori-db --remote --file=schema.sql
+[[d1_databases]]
+binding = "DB"
+database_name = "ln-sakayori-db"
+database_id = "REPLACE_WITH_REAL_ID"
+
+# Required secrets (set via dashboard or `wrangler secret put`):
+#   TURNSTILE_SECRET_KEY   - Cloudflare Turnstile secret
+#   TELEGRAM_BOT_TOKEN     - BotFather token for moderation notices
+#   TELEGRAM_ADMIN_CHAT_ID - your numeric Telegram user id
+#   TELEGRAM_WEBHOOK_SECRET - random string, also set as Telegram setWebhook secret_token
+#
+# Public env (Pages dashboard > Settings > Environment variables):
+#   PUBLIC_TURNSTILE_SITE_KEY - Turnstile site key (safe to expose)

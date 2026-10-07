@@ -52,6 +52,7 @@ const words = entry.body ? entry.body.split(/\s+/).filter(Boolean).length : 0;
 const minutes = Math.max(1, Math.ceil(words / 200));
 const pageTitle = `Chương ${chapter}: ${title} | ${novelTitle} - Sakayori Studio`;
 const excerpt = (entry.body || '')
+  .replace(/<!--[\s\S]*?-->/g, ' ')
   .replace(/[#*`>~\-—]/g, '')
   .replace(/△▼△▼△▼△/g, ' ')
   .replace(/\s+/g, ' ')

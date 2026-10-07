@@ -51,13 +51,15 @@ const { novel, arc, chapter, title } = entry.data;
 const words = entry.body ? entry.body.split(/\s+/).filter(Boolean).length : 0;
 const minutes = Math.max(1, Math.ceil(words / 200));
 const pageTitle = `Chương ${chapter}: ${title} | ${novelTitle} - Sakayori Studio`;
-const excerpt = (entry.body || '')
+const excerptRaw = (entry.body || '')
   .replace(/<!--[\s\S]*?-->/g, ' ')
-  .replace(/[#*`>~\-—]/g, '')
+  .replace(/[#*`>~\-—―「」]/g, '')
   .replace(/△▼△▼△▼△/g, ' ')
   .replace(/\s+/g, ' ')
-  .trim()
-  .slice(0, 150);
+  .trim();
+const excerpt = excerptRaw.length > 150
+  ? excerptRaw.slice(0, 150).replace(/\s+\S*$/, '') + '…'
+  : excerptRaw;
 const description = excerpt.length > 20 ? excerpt : `Đọc chương ${chapter} - ${title}. Bản dịch tiếng Việt phi lợi nhuận của Sakayori Studio.`;
 ---
 <ReaderLayout title={pageTitle} description={description}>
@@ -84,7 +86,6 @@ const description = excerpt.length > 20 ? excerpt : `Đọc chương ${chapter} 
 
     <ChapterNav prev={prev} next={next} siblings={siblings} current={chapter} />
 
-    <!-- SAMPLE CONTENT: thay bằng chương thật khi nội dung arc lên main -->
     <article class="chapter-body" id="chapter-body">
       <Content />
     </article>

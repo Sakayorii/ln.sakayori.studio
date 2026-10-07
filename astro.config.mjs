@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 import remarkSceneBreak from './src/utils/remark-scene-break.mjs';
+import remarkDropcap from './src/utils/remark-dropcap.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -10,7 +11,7 @@ export default defineConfig({
   adapter: cloudflare(),
   integrations: [sitemap()],
   markdown: {
-    remarkPlugins: [remarkSceneBreak],
+    remarkPlugins: [remarkDropcap, remarkSceneBreak],
   },
   vite: {
     build: {

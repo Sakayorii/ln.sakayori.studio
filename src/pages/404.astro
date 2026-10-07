@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+---
+<BaseLayout title="Không tìm thấy trang - Sakayori Studio" description="Trang bạn tìm không tồn tại hoặc đã bị di chuyển.">
+  <SiteHeader />
+  <main class="wrap" style="padding: 72px 24px; text-align: center;">
+    <p class="kicker">Lỗi 404</p>
+    <h1 style="font-size: clamp(32px, 5vw, 52px); margin: 0 0 16px;">Trang không tồn tại</h1>
+    <p class="sub" style="color: var(--ink-soft); margin: 0 0 32px;">
+      Liên kết bạn mở có thể đã cũ, hoặc chương này chưa có trong bản hiện tại.
+    </p>
+    <a class="btn" href="/">Về thư viện</a>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="foot-brand"><img src="/logo.svg" alt="" width="22" height="22" /> SAKAYORI STUDIO</div>
+    </div>
+  </footer>
+</BaseLayout>

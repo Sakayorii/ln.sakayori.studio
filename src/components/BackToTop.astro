@@ -1,13 +1,18 @@
---- /* Back to top: appears after 30% of page scrolled. */ ---
-<button class="to-top" id="to-top" aria-label="Về đầu trang">↑</button>
+---
+/* Back to top: only appears when the user is at the very bottom of the page. */
+import Icon from './Icon.astro';
+---
+<button class="to-top" id="to-top" aria-label="Về đầu trang"><Icon name="arrow-up" /></button>
 <script>
   const btn = document.getElementById('to-top') as HTMLButtonElement;
   function update() {
     const h = document.documentElement;
     const max = h.scrollHeight - h.clientHeight;
-    btn.classList.toggle('show', max > 0 && h.scrollTop / max > 0.3);
+    const atBottom = max > 0 && h.scrollHeight - (h.scrollTop + h.clientHeight) < 120;
+    btn.classList.toggle('show', atBottom);
   }
   window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
   btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   update();
 </script>

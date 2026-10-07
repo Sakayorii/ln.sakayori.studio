@@ -1,24 +1,25 @@
 ---
+import Icon from './Icon.astro';
 interface Link { url: string; label: string }
 interface Props {
   prev: Link | null;
   next: Link | null;
   siblings: { chapter: number; title: string; url: string }[];
-  current: number;
+  currentUrl: string;
   bottom?: boolean;
 }
-const { prev, next, siblings, current, bottom = false } = Astro.props;
+const { prev, next, siblings, currentUrl, bottom = false } = Astro.props;
 const novelHome = siblings.length ? siblings[0].url.split('/').slice(0, 2).join('/') + '/' : '/';
 ---
 <nav class={`chapter-nav${bottom ? ' bottom' : ''}`} aria-label={bottom ? 'Điều hướng cuối chương' : 'Điều hướng đầu chương'}>
   {prev
-    ? <a class="nav-btn" href={prev.url} rel="prev">← Chương trước</a>
-    : <span class="nav-btn disabled" aria-hidden="true">← Chương trước</span>}
+    ? <a class="nav-btn" href={prev.url} rel="prev"><Icon name="arrow-left" size={15} /><span>Chương trước</span></a>
+    : <span class="nav-btn disabled" aria-hidden="true"><Icon name="arrow-left" size={15} /><span>Chương trước</span></span>}
 
   {!bottom && (
     <select class="jump-select" aria-label="Nhảy nhanh đến chương" onchange="if(this.value)location.href=this.value">
       {siblings.map((s) => (
-        <option value={s.url} selected={s.chapter === current}>
+        <option value={s.url} selected={s.url === currentUrl}>
           Ch. {s.chapter}: {s.title.length > 34 ? s.title.slice(0, 34) + '…' : s.title}
         </option>
       ))}
@@ -27,8 +28,8 @@ const novelHome = siblings.length ? siblings[0].url.split('/').slice(0, 2).join(
   {bottom && <a class="nav-btn ghost" href={novelHome}>Mục lục</a>}
 
   {next
-    ? <a class="nav-btn" href={next.url} rel="next">Chương sau →</a>
-    : <span class="nav-btn disabled" aria-hidden="true">Chương sau →</span>}
+    ? <a class="nav-btn" href={next.url} rel="next"><span>Chương sau</span><Icon name="arrow-right" size={15} /></a>
+    : <span class="nav-btn disabled" aria-hidden="true"><span>Chương sau</span><Icon name="arrow-right" size={15} /></span>}
 </nav>
 
 {bottom && (

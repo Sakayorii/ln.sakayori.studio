@@ -64,7 +64,7 @@ const description = excerpt.length > 20 ? excerpt : `Đọc chương ${chapter} 
 ---
 <ReaderLayout title={pageTitle} description={description}>
   <ProgressBar />
-  <SiteHeader />
+  <SiteHeader><ReaderSettings slot="actions" /></SiteHeader>
 
   <main class="chapter-wrap">
     <div id="resume-state" hidden
@@ -81,16 +81,15 @@ const description = excerpt.length > 20 ? excerpt : `Đọc chương ${chapter} 
         words={words}
         minutes={minutes}
       />
-      <p class="chapter-meta" style="margin-top:-28px;">{excerpt}</p>
     </div>
 
-    <ChapterNav prev={prev} next={next} siblings={siblings} current={chapter} />
+    <ChapterNav prev={prev} next={next} siblings={siblings} currentUrl={`/${novel}/arc-${arc}/chuong-${chapter}`} />
 
     <article class="chapter-body" id="chapter-body">
       <Content />
     </article>
 
-    <ChapterNav prev={prev} next={next} siblings={siblings} current={chapter} bottom />
+    <ChapterNav prev={prev} next={next} siblings={siblings} currentUrl={`/${novel}/arc-${arc}/chuong-${chapter}`} bottom />
 
     <TypoReport novel={novel} arc={arc} chapter={chapter} />
 
@@ -108,7 +107,6 @@ const description = excerpt.length > 20 ? excerpt : `Đọc chương ${chapter} 
     </div>
   </footer>
 
-  <ReaderSettings />
   <BackToTop />
 </ReaderLayout>
 

@@ -26,18 +26,23 @@
 }
 
 :root {
-  --paper: #FBF0D9;
-  --paper-deep: #f3e7c9;
-  --ink: #2A2118;
-  --ink-soft: #5A4E3C;
-  --muted: #8A7A5C;
-  --line: rgba(42, 33, 24, 0.18);
+  /* Reader theme contract (single source of truth: reader-settings.ts).
+     The 4 bg presets write --read-bg/--read-fg; the whole site derives from them
+     so the reading background stays consistent on every page. */
+  --read-bg: #f4ecd8;
+  --read-fg: #3d3428;
+  --paper: var(--read-bg);
+  --paper-deep: color-mix(in srgb, var(--read-bg) 93%, var(--read-fg));
+  --ink: var(--read-fg);
+  --ink-soft: color-mix(in srgb, var(--read-fg) 76%, var(--read-bg));
+  --muted: color-mix(in srgb, var(--read-fg) 60%, var(--read-bg));
+  --line: color-mix(in srgb, var(--read-fg) 18%, transparent);
   --charcoal: #1A1A1E;
   --serif: 'Noto Serif', Georgia, 'Times New Roman', serif;
   --sans: 'Be Vietnam Pro', 'Noto Sans', system-ui, sans-serif;
 }
 
-*, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
@@ -45,10 +50,14 @@ body {
   color: var(--ink);
   font-family: var(--serif);
   line-height: 1.7;
+  transition: background .25s ease, color .25s ease;
 }
+/* No accidental text selection on UI chrome; the chapter body keeps
+   selection enabled for the typo-report feature. */
+button, .icon-btn, .nav-btn, .site-nav a, .brand { user-select: none; -webkit-user-select: none; }
 a { color: inherit; }
 img, svg { display: block; }
-::selection { background: rgba(42, 33, 24, 0.18); }
+::selection { background: color-mix(in srgb, var(--read-fg) 18%, transparent); }
 
 /* ---------- site chrome ---------- */
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
@@ -71,7 +80,7 @@ img, svg { display: block; }
   text-decoration: none; color: var(--ink-soft);
   padding: 8px 12px; border-radius: 8px; border: 0; background: none; cursor: pointer;
 }
-.site-nav a:hover, .icon-btn:hover { background: rgba(42,33,24,0.07); color: var(--ink); }
+.site-nav a:hover, .icon-btn:hover { background: color-mix(in srgb, var(--read-fg) 7%, transparent); color: var(--ink); }
 .icon-btn svg { width: 18px; height: 18px; }
 
 /* ---------- library (homepage) ---------- */
@@ -108,9 +117,9 @@ img, svg { display: block; }
   background: var(--ink); border-radius: 8px; padding: 12px 22px;
   border: 1px solid var(--ink); cursor: pointer;
 }
-.btn:hover { background: #3d2f1f; }
+.btn:hover { background: color-mix(in srgb, var(--ink) 88%, var(--paper)); }
 .btn.ghost { background: transparent; color: var(--ink); }
-.btn.ghost:hover { background: rgba(42,33,24,0.07); }
+.btn.ghost:hover { background: color-mix(in srgb, var(--read-fg) 7%, transparent); }
 
 .shelf-head {
   display: flex; align-items: baseline; justify-content: space-between;
@@ -142,7 +151,7 @@ img, svg { display: block; }
   color: var(--ink-soft); background: transparent;
 }
 .badge.new { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-.novel-go { font-family: var(--sans); font-size: 14px; white-space: nowrap; color: var(--ink-soft); }
+.novel-go { font-family: var(--sans); font-size: 14px; white-space: nowrap; color: var(--ink-soft); display: inline-flex; align-items: center; gap: 6px; }
 .novel-row:hover .novel-go { color: var(--ink); }
 
 /* ---------- novel page ---------- */
@@ -181,7 +190,7 @@ img, svg { display: block; }
 /* ---------- search modal ---------- */
 .search-modal {
   position: fixed; inset: 0; z-index: 80; display: none;
-  background: rgba(42, 33, 24, 0.4);
+  background: color-mix(in srgb, var(--read-fg) 40%, transparent);
   align-items: flex-start; justify-content: center; padding: 12vh 20px 20px;
 }
 .search-modal.open { display: flex; }

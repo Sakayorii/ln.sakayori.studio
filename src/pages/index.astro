@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteHeader from '../components/SiteHeader.astro';
+import Icon from '../components/Icon.astro';
 
 const novels = await getCollection('novels');
 const chapters = await getCollection('chapters');
@@ -14,6 +15,9 @@ const shelf = novels.map((n) => {
   const latest = list[list.length - 1];
   return { novel: n, count: list.length, arcs, latest };
 });
+// Valid chapter URLs (build-time) so the resume card never points at a
+// chapter that no longer exists in this build.
+const validUrls = chapters.map((c) => `/${c.data.novel}/arc-${c.data.arc}/chuong-${c.data.chapter}`);
 ---
 <BaseLayout title="Thư viện Light Novel - Sakayori Studio">
   <SiteHeader />
@@ -24,7 +28,7 @@ const shelf = novels.map((n) => {
       <p class="sub">Bản dịch tiếng Việt · Phi lợi nhuận · Dịu mắt như sách giấy</p>
     </section>
 
-    <div class="resume-card" id="resume-card" aria-live="polite">
+    <div class="resume-card" id="resume-card" data-valid={JSON.stringify(validUrls)} aria-live="polite">
       <span class="label">Đang đọc dở</span>
       <span id="resume-text" style="font-size:17px;"></span>
       <a class="btn" id="resume-link" href="#">Đọc tiếp</a>
@@ -49,7 +53,7 @@ const shelf = novels.map((n) => {
             {latest && <span class="badge new">Mới: Ch.{latest.data.chapter}</span>}
           </p>
         </span>
-        <span class="novel-go">Vào đọc →</span>
+        <span class="novel-go">Vào đọc <Icon name="arrow-right" size={14} /></span>
       </a>
     ))}
   </main>
@@ -68,15 +72,19 @@ const shelf = novels.map((n) => {
 
 <script>
   import { loadResume } from '../utils/reader-settings';
+  const card = document.getElementById('resume-card');
+  const valid = JSON.parse(card?.dataset.valid || '[]') as string[];
   const r = loadResume();
-  if (r) {
-    const card = document.getElementById('resume-card');
+  if (r && valid.includes(r.url) && card) {
     const text = document.getElementById('resume-text');
-    const link = document.getElementById('resume-link') as HTMLAnchorElement;
-    if (card && text && link) {
+    const link = document.getElementById('resume-link') as HTMLAnchorElement | null;
+    if (text && link) {
       text.textContent = `${r.novelTitle} · Arc ${r.arc} · Chương ${r.chapter}: ${r.chapterTitle}`;
       link.href = r.url;
       card.classList.add('show');
     }
+  } else if (card) {
+    // Saved position points at a chapter not in this build: drop it silently.
+    try { localStorage.removeItem('ln-resume-reading'); } catch { /* ignore */ }
   }
 </script>

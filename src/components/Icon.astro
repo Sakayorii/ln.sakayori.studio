@@ -1,0 +1,31 @@
+---
+/* Unified simple line-icon set. 24x24, stroke=currentColor, no emoji, no mixed styles.
+   Usage: <Icon name="arrow-right" /> */
+interface Props {
+  name:
+    | 'arrow-left' | 'arrow-right' | 'arrow-up'
+    | 'chevron-down' | 'search' | 'settings' | 'close'
+    | 'check' | 'copy' | 'book' | 'alert';
+  size?: number;
+}
+const { name, size = 18 } = Astro.props;
+const paths: Record<Props['name'], string> = {
+  'arrow-left': '<path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/>',
+  'arrow-right': '<path d="M5 12h14"/><path d="M13 6l6 6-6 6"/>',
+  'arrow-up': '<path d="M12 19V5"/><path d="M6 11l6-6 6 6"/>',
+  'chevron-down': '<path d="M6 9l6 6 6-6"/>',
+  'search': '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/>',
+  'settings':
+    '<circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.04-1.56 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.04H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.6 8.96a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34h.09A1.7 1.7 0 0 0 10.04 3V3a2 2 0 1 1 4 0v.09c0 .68.4 1.3 1.04 1.56.6.26 1.3.11 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87v.09c.26.6.88 1.04 1.56 1.04H21a2 2 0 1 1 0 4h-.09c-.68 0-1.3.4-1.51 1.04z"/>',
+  'close': '<path d="M6 6l12 12M18 6L6 18"/>',
+  'check': '<path d="M4 12.5l5 5L20 6.5"/>',
+  'copy': '<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+  'book': '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5v13z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/>',
+  'alert': '<path d="M12 3l10 18H2L12 3z"/><path d="M12 10v4"/><path d="M12 17.5v.5"/>',
+};
+---
+<svg
+  width={size} height={size} viewBox="0 0 24 24" fill="none"
+  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+  aria-hidden="true" set:html={paths[name]}
+/>

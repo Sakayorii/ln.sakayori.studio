@@ -1,4 +1,5 @@
 ---
+import Icon from './Icon.astro';
 interface Props {
   homeUrl?: string;
 }
@@ -13,8 +14,9 @@ const { homeUrl = '/' } = Astro.props;
     <nav class="site-nav" aria-label="Điều hướng chính">
       <a href="/">Thư viện</a>
       <button class="icon-btn" data-open-search aria-label="Tìm kiếm">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <Icon name="search" />
       </button>
+      <slot name="actions" />
     </nav>
   </div>
 </header>

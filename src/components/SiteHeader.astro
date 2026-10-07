@@ -1,0 +1,27 @@
+---
+interface Props {
+  novelUrl?: string;
+  novelTitle?: string;
+}
+const { novelUrl, novelTitle } = Astro.props;
+---
+<header class="reader-top-bar">
+  <a href="/" class="reader-brand-link">
+    <img src="/logo.svg" alt="Sakayori Studio Logo" width="24" height="24" />
+    <span>SAKAYORI STUDIO</span>
+  </a>
+
+  <div class="reader-actions">
+    {novelUrl && (
+      <a href={novelUrl} class="btn-icon" title={novelTitle || 'Danh sách chương'}>
+        Mục lục
+      </a>
+    )}
+    <button type="button" class="btn-icon" id="btn-open-search" title="Tìm kiếm">
+      Tìm kiếm
+    </button>
+    <button type="button" class="btn-icon" id="btn-open-settings" title="Cài đặt đọc">
+      Cài đặt
+    </button>
+  </div>
+</header>

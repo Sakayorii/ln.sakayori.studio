@@ -1,0 +1,36 @@
+---
+interface Props {
+  novelTitle: string;
+  novelUrl: string;
+  arc: number;
+  chapter: number;
+  title: string;
+  words: number;
+  minutes: number;
+}
+
+const { novelTitle, novelUrl, arc, chapter, title, words, minutes } = Astro.props;
+---
+<header class="chapter-ledger-header">
+  <nav class="breadcrumb-trail" aria-label="Điều hướng phân cấp">
+    <a href="/">Trang chủ</a>
+    <span>/</span>
+    <a href={novelUrl}>{novelTitle}</a>
+    <span>/</span>
+    <span>Arc {arc}</span>
+    <span>/</span>
+    <span>Chương {chapter}</span>
+  </nav>
+
+  <h1 class="chapter-main-title">
+    Chương {chapter}: {title}
+  </h1>
+
+  <div class="chapter-meta-bar">
+    <span>{words.toLocaleString('vi-VN')} từ</span>
+    <span>·</span>
+    <span>Khoảng {minutes} phút đọc</span>
+    <span>·</span>
+    <span>Bản dịch: Sakayori Studio</span>
+  </div>
+</header>

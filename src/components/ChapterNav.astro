@@ -1,0 +1,75 @@
+---
+interface NavItem {
+  url: string;
+  label: string;
+}
+
+interface Sibling {
+  chapter: number;
+  title: string;
+  url: string;
+}
+
+interface Props {
+  prev?: NavItem | null;
+  next?: NavItem | null;
+  siblings?: Sibling[];
+  current: number;
+  bottom?: boolean;
+}
+
+const { prev, next, siblings = [], current, bottom = false } = Astro.props;
+---
+<nav class="chapter-nav-bar" aria-label={bottom ? "Điều hướng cuối trang" : "Điều hướng đầu trang"}>
+  {prev ? (
+    <a href={prev.url} class="nav-link" rel="prev" title={prev.label}>
+      ← Chương trước
+    </a>
+  ) : (
+    <span class="nav-link disabled" aria-disabled="true">
+      ← Chương trước
+    </span>
+  )}
+
+  <select class="jump-select" aria-label="Nhảy nhanh đến chương" data-current-chapter={current}>
+    {siblings.map((s) => (
+      <option value={s.url} selected={s.chapter === current}>
+        Chương {s.chapter}: {s.title}
+      </option>
+    ))}
+  </select>
+
+  {next ? (
+    <a href={next.url} class="nav-link" rel="next" title={next.label}>
+      Chương sau →
+    </a>
+  ) : (
+    <span class="nav-link disabled" aria-disabled="true">
+      Chương sau →
+    </span>
+  )}
+</nav>
+
+<script>
+  // Handle jump dropdowns
+  document.querySelectorAll<HTMLSelectElement>('.jump-select').forEach((sel) => {
+    sel.addEventListener('change', () => {
+      if (sel.value) window.location.href = sel.value;
+    });
+  });
+
+  // Keyboard navigation: Left/Right arrows (only if not typing in inputs)
+  window.addEventListener('keydown', (e) => {
+    const target = e.target as HTMLElement | null;
+    if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT')) {
+      return;
+    }
+    if (e.key === 'ArrowLeft') {
+      const prevEl = document.querySelector<HTMLAnchorElement>('a[rel="prev"]');
+      if (prevEl) prevEl.click();
+    } else if (e.key === 'ArrowRight') {
+      const nextEl = document.querySelector<HTMLAnchorElement>('a[rel="next"]');
+      if (nextEl) nextEl.click();
+    }
+  });
+</script>

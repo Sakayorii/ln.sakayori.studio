@@ -1,0 +1,168 @@
+---
+interface Props {
+  novel: string;
+  arc: number;
+  chapter: number;
+}
+
+const { novel, arc, chapter } = Astro.props;
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
+---
+<div
+  id="typo-report-root"
+  data-novel={novel}
+  data-arc={arc}
+  data-chapter={chapter}
+  data-sitekey={siteKey}
+>
+  <!-- Floating Action Button -->
+  <button type="button" class="typo-fab-btn" id="typo-fab-btn" aria-label="Báo lỗi chính tả đoạn văn đã chọn">
+    Báo lỗi chính tả
+  </button>
+
+  <!-- Typo Report Modal -->
+  <div class="modal-backdrop" id="typo-modal" role="dialog" aria-modal="true" aria-labelledby="typo-modal-title">
+    <div class="modal-card">
+      <h3 id="typo-modal-title">Báo lỗi chính tả</h3>
+      <p class="modal-quote" id="typo-quote-preview"></p>
+      
+      <label for="typo-user-note" class="drawer-label">Gợi ý sửa (không bắt buộc):</label>
+      <textarea
+        id="typo-user-note"
+        maxlength="300"
+        placeholder="Ví dụ: sai từ 'X' thành 'Y'..."
+      ></textarea>
+
+      <!-- Honeypot -->
+      <input type="text" id="typo-hp-field" style="display:none;" tabindex="-1" autocomplete="off" />
+
+      <!-- Turnstile Slot -->
+      <div id="typo-turnstile-slot" style="margin-bottom: 12px;"></div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="btn-cancel-typo">Hủy</button>
+        <button type="button" class="btn-primary" id="btn-submit-typo">Gửi báo cáo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  import { showToast } from '../utils/reader-settings';
+
+  const root = document.getElementById('typo-report-root');
+  if (root) {
+    const novel = root.dataset.novel || 'rezero';
+    const arc = parseInt(root.dataset.arc || '1', 10);
+    const chapter = parseInt(root.dataset.chapter || '1', 10);
+    const siteKey = root.dataset.sitekey || '';
+
+    const fab = document.getElementById('typo-fab-btn');
+    const modal = document.getElementById('typo-modal');
+    const quoteEl = document.getElementById('typo-quote-preview');
+    const noteEl = document.getElementById('typo-user-note') as HTMLTextAreaElement | null;
+    const btnCancel = document.getElementById('btn-cancel-typo');
+    const btnSubmit = document.getElementById('btn-submit-typo');
+    const hpField = document.getElementById('typo-hp-field') as HTMLInputElement | null;
+    const bodyEl = document.getElementById('chapter-prose-body');
+
+    let selectedText = '';
+    const loadTime = Date.now();
+    let turnstileWidgetId: any;
+
+    function renderTurnstile() {
+      if (!siteKey || turnstileWidgetId !== undefined) return;
+      const slot = document.getElementById('typo-turnstile-slot');
+      if ((window as any).turnstile && slot) {
+        turnstileWidgetId = (window as any).turnstile.render(slot, { sitekey: siteKey });
+      }
+    }
+
+    document.addEventListener('selectionchange', () => {
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed || !bodyEl || !bodyEl.contains(sel.anchorNode)) {
+        fab?.classList.remove('show');
+        return;
+      }
+
+      const text = sel.toString().trim();
+      if (text.length < 2) {
+        fab?.classList.remove('show');
+        return;
+      }
+
+      selectedText = text.slice(0, 200);
+      try {
+        const range = sel.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+        if (fab) {
+          fab.style.top = `${window.scrollY + rect.top - 38}px`;
+          fab.style.left = `${Math.min(window.scrollX + rect.left, window.innerWidth - 160)}px`;
+          fab.classList.add('show');
+        }
+      } catch {}
+    });
+
+    document.addEventListener('scroll', () => {
+      fab?.classList.remove('show');
+    }, { passive: true });
+
+    fab?.addEventListener('click', () => {
+      if (quoteEl) quoteEl.textContent = `“${selectedText}”`;
+      if (noteEl) noteEl.value = '';
+      modal?.classList.add('open');
+      renderTurnstile();
+    });
+
+    btnCancel?.addEventListener('click', () => {
+      modal?.classList.remove('open');
+    });
+
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) modal.classList.remove('open');
+    });
+
+    btnSubmit?.addEventListener('click', async () => {
+      if (!btnSubmit) return;
+      btnSubmit.setAttribute('disabled', 'true');
+
+      let token = '';
+      if (siteKey && (window as any).turnstile && turnstileWidgetId !== undefined) {
+        token = (window as any).turnstile.getResponse(turnstileWidgetId);
+      }
+
+      try {
+        const res = await fetch('/api/typo-reports', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            novel,
+            arc,
+            chapter,
+            selected_text: selectedText,
+            user_note: noteEl?.value.trim().slice(0, 300) || null,
+            website_url: hpField?.value || '',
+            t0: loadTime,
+            turnstileToken: token,
+          }),
+        });
+
+        if (res.status === 429) {
+          showToast('Bạn gửi quá nhanh. Vui lòng thử lại sau.');
+          return;
+        }
+
+        if (!res.ok) throw new Error();
+
+        modal?.classList.remove('open');
+        window.getSelection()?.removeAllRanges();
+        showToast('Cảm ơn bạn đã đóng góp. Báo cáo lỗi đã được gửi đến ban biên tập.');
+      } catch {
+        showToast('Gửi báo cáo chưa thành công. Vui lòng thử lại sau.');
+      } finally {
+        btnSubmit.removeAttribute('disabled');
+      }
+    });
+  }
+</script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>

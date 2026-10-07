@@ -1,0 +1,186 @@
+---
+import { getCollection, render } from 'astro:content';
+import ReaderLayout from '../../../layouts/ReaderLayout.astro';
+import SiteHeader from '../../../components/SiteHeader.astro';
+import ProgressBar from '../../../components/ProgressBar.astro';
+import ChapterHeader from '../../../components/ChapterHeader.astro';
+import ChapterNav from '../../../components/ChapterNav.astro';
+import ReaderSettings from '../../../components/ReaderSettings.astro';
+import TypoReport from '../../../components/TypoReport.astro';
+import Comments from '../../../components/Comments.astro';
+import SearchModal from '../../../components/SearchModal.astro';
+import BackToTop from '../../../components/BackToTop.astro';
+
+export async function getStaticPaths() {
+  const chapters = await getCollection('chapters');
+  const novels = await getCollection('novels');
+
+  const byNovel = new Map<string, typeof chapters>();
+  for (const c of chapters) {
+    if (!byNovel.has(c.data.novel)) byNovel.set(c.data.novel, []);
+    byNovel.get(c.data.novel)!.push(c);
+  }
+
+  for (const list of byNovel.values()) {
+    list.sort((a, b) => a.data.arc - b.data.arc || a.data.chapter - b.data.chapter);
+  }
+
+  return chapters.map((entry) => {
+    const list = byNovel.get(entry.data.novel)!;
+    const i = list.findIndex((e) => e.id === entry.id);
+    const novel = novels.find((n) => n.id === entry.data.novel);
+
+    const link = (e: (typeof list)[number] | undefined) =>
+      e
+        ? {
+            url: `/${e.data.novel}/arc-${e.data.arc}/chuong-${e.data.chapter}`,
+            label: `Chương ${e.data.chapter}: ${e.data.title}`,
+          }
+        : null;
+
+    return {
+      params: {
+        novel: entry.data.novel,
+        arc: `arc-${entry.data.arc}`,
+        chapter: `chuong-${entry.data.chapter}`,
+      },
+      props: {
+        entry,
+        novelTitle: novel?.data.title ?? entry.data.novel,
+        prev: link(list[i - 1]),
+        next: link(list[i + 1]),
+        siblings: list.map((e) => ({
+          chapter: e.data.chapter,
+          title: e.data.title,
+          url: `/${e.data.novel}/arc-${e.data.arc}/chuong-${e.data.chapter}`,
+        })),
+      },
+    };
+  });
+}
+
+const { entry, novelTitle, prev, next, siblings } = Astro.props;
+const { Content } = await render(entry);
+const { novel, arc, chapter, title } = entry.data;
+
+const rawBody = entry.body || '';
+const words = rawBody.split(/\s+/).filter(Boolean).length;
+const minutes = Math.max(1, Math.ceil(words / 220));
+
+const pageTitle = `Chương ${chapter}: ${title} | ${novelTitle} - Sakayori Studio`;
+
+// Excerpt for SEO & Pagefind Metadata only (150 chars, no raw markdown/HTML)
+const cleanExcerpt = rawBody
+  .replace(/<!--[\s\S]*?-->/g, ' ')
+  .replace(/[#*`>~\-—]/g, '')
+  .replace(/△▼△▼△▼△/g, ' ')
+  .replace(/\s+/g, ' ')
+  .trim()
+  .slice(0, 150);
+
+const description =
+  cleanExcerpt.length > 20
+    ? cleanExcerpt
+    : `Đọc Chương ${chapter} - ${title}. Bản dịch văn học phi thương mại của Sakayori Studio.`;
+---
+<ReaderLayout title={pageTitle} description={description}>
+  <ProgressBar />
+
+  <main
+    class="reader-container"
+    id="chapter-main-wrap"
+    data-novel={novel}
+    data-noveltitle={novelTitle}
+    data-arc={arc}
+    data-chapter={chapter}
+    data-title={title}
+  >
+    <SiteHeader novelUrl={`/${novel}/`} novelTitle={novelTitle} />
+
+    <!-- Pagefind indexes ONLY this metadata block -->
+    <div data-pagefind-body data-pagefind-meta={`title:${pageTitle}`}>
+      <ChapterHeader
+        novelTitle={novelTitle}
+        novelUrl={`/${novel}/`}
+        arc={arc}
+        chapter={chapter}
+        title={title}
+        words={words}
+        minutes={minutes}
+      />
+      <!-- Hidden preview snippet for Pagefind excerpt -->
+      <span style="display:none;" aria-hidden="true">{cleanExcerpt}</span>
+    </div>
+
+    <!-- Top Navigation -->
+    <ChapterNav prev={prev} next={next} siblings={siblings} current={chapter} />
+
+    <!-- Chapter Prose Body -->
+    <article class="chapter-prose" id="chapter-prose-body">
+      <Content />
+    </article>
+
+    <!-- Bottom Navigation -->
+    <ChapterNav prev={prev} next={next} siblings={siblings} current={chapter} bottom />
+
+    <!-- Typo Report & Comments -->
+    <TypoReport novel={novel} arc={arc} chapter={chapter} />
+    <Comments novel={novel} arc={arc} chapter={chapter} />
+
+    <!-- Editorial Footer -->
+    <footer style="margin-top: 60px; padding-top: 24px; border-top: 1px solid rgba(120, 113, 108, 0.2); font-family: 'Be Vietnam Pro', sans-serif; font-size: 12px; opacity: 0.75; text-align: center; line-height: 1.6;">
+      <p>Bản dịch tiếng Việt phi thương mại được thực hiện bởi Sakayori Studio.</p>
+      <p>Toàn bộ bản quyền tác phẩm gốc thuộc về tác giả và nhà xuất bản gốc.</p>
+    </footer>
+  </main>
+
+  <ReaderSettings />
+  <SearchModal />
+  <BackToTop />
+</ReaderLayout>
+
+<script>
+  import { saveResume, loadResume } from '../../../utils/reader-settings';
+
+  const wrap = document.getElementById('chapter-main-wrap');
+  if (wrap) {
+    const novel = wrap.dataset.novel || 'rezero';
+    const novelTitle = wrap.dataset.noveltitle || 'Re:Zero';
+    const arc = parseInt(wrap.dataset.arc || '1', 10);
+    const chapter = parseInt(wrap.dataset.chapter || '1', 10);
+    const chapterTitle = wrap.dataset.title || '';
+    const url = `/${novel}/arc-${arc}/chuong-${chapter}`;
+
+    // Restore saved scroll position if returning to this chapter
+    const saved = loadResume();
+    if (saved && saved.url === url && saved.scrollY > 0) {
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: saved.scrollY, behavior: 'instant' });
+      });
+    }
+
+    // Save reading progress throttled
+    let lastSave = 0;
+    const updateProgress = () => {
+      saveResume({
+        novel,
+        novelTitle,
+        arc,
+        chapter,
+        chapterTitle,
+        url,
+        scrollY: window.scrollY,
+      });
+    };
+
+    window.addEventListener('scroll', () => {
+      const now = Date.now();
+      if (now - lastSave > 2000) {
+        lastSave = now;
+        updateProgress();
+      }
+    }, { passive: true });
+
+    window.addEventListener('beforeunload', updateProgress);
+  }
+</script>

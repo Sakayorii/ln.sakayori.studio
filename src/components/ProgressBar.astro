@@ -1,0 +1,33 @@
+---
+// Reading Progress Bar Component
+---
+<div class="progress-bar-rail" id="reading-progress-rail" aria-hidden="true">
+  <div class="progress-bar-thumb" id="reading-progress-thumb"></div>
+</div>
+
+<script>
+  function updateProgress() {
+    const thumb = document.getElementById('reading-progress-thumb');
+    if (!thumb) return;
+    const body = document.getElementById('chapter-prose-body');
+    if (!body) return;
+    
+    const rect = body.getBoundingClientRect();
+    const totalHeight = rect.height;
+    const visibleTop = window.scrollY;
+    const bodyTop = body.offsetTop;
+    
+    if (visibleTop < bodyTop) {
+      thumb.style.width = '0%';
+      return;
+    }
+    
+    const scrolled = visibleTop - bodyTop;
+    const pct = Math.min(100, Math.max(0, (scrolled / (totalHeight - window.innerHeight + 100)) * 100));
+    thumb.style.width = `${pct}%`;
+  }
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
+</script>

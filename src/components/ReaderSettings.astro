@@ -1,0 +1,185 @@
+---
+// Reader Settings Slide-out Utility Drawer
+---
+<aside class="utility-drawer" id="utility-drawer" aria-label="Bảng cài đặt giao diện đọc" aria-hidden="true">
+  <div class="drawer-header">
+    <h3>Cài đặt giao diện đọc</h3>
+    <button type="button" class="btn-icon" id="btn-close-settings" aria-label="Đóng bảng cài đặt">
+      ✕
+    </button>
+  </div>
+
+  <!-- Theme Preset Swatches -->
+  <div class="drawer-group">
+    <label class="drawer-label">Màu nền trang</label>
+    <div class="theme-swatches" id="theme-swatches">
+      <button type="button" class="theme-swatch" data-bg="hako">
+        <span class="theme-preview-dot" style="background:#f4ecd8;"></span>
+        <span>Vàng giấy Hako</span>
+      </button>
+      <button type="button" class="theme-swatch" data-bg="cream">
+        <span class="theme-preview-dot" style="background:#faf7ef;"></span>
+        <span>Kem sáng</span>
+      </button>
+      <button type="button" class="theme-swatch" data-bg="gray">
+        <span class="theme-preview-dot" style="background:#d8d8d8;"></span>
+        <span>Xám dịu</span>
+      </button>
+      <button type="button" class="theme-swatch" data-bg="dark">
+        <span class="theme-preview-dot" style="background:#18181b;"></span>
+        <span>Đêm</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Font Family -->
+  <div class="drawer-group">
+    <label class="drawer-label">Kiểu chữ</label>
+    <div class="pill-group" id="font-pills">
+      <button type="button" class="pill-btn" data-font="serif">Có chân (Serif)</button>
+      <button type="button" class="pill-btn" data-font="sans">Không chân (Sans)</button>
+    </div>
+  </div>
+
+  <!-- Font Size -->
+  <div class="drawer-group">
+    <label class="drawer-label">Cỡ chữ</label>
+    <div class="range-wrap">
+      <input type="range" id="setting-size" min="15" max="24" step="1" />
+      <span class="range-val" id="val-size">18px</span>
+    </div>
+  </div>
+
+  <!-- Line Height -->
+  <div class="drawer-group">
+    <label class="drawer-label">Giãn dòng</label>
+    <div class="pill-group" id="lh-pills">
+      <button type="button" class="pill-btn" data-lh="1.5">Gọn (1.5)</button>
+      <button type="button" class="pill-btn" data-lh="1.8">Vừa (1.8)</button>
+      <button type="button" class="pill-btn" data-lh="2.1">Rộng (2.1)</button>
+    </div>
+  </div>
+
+  <!-- Reader Width -->
+  <div class="drawer-group">
+    <label class="drawer-label">Khổ đọc</label>
+    <div class="pill-group" id="width-pills">
+      <button type="button" class="pill-btn" data-width="650">Gọn (650)</button>
+      <button type="button" class="pill-btn" data-width="750">Chuẩn (750)</button>
+      <button type="button" class="pill-btn" data-width="900">Rộng (900)</button>
+    </div>
+  </div>
+</aside>
+
+<script>
+  import { getSettings, saveSettings, applySettings } from '../utils/reader-settings';
+
+  const drawer = document.getElementById('utility-drawer');
+  const btnOpen = document.getElementById('btn-open-settings');
+  const btnClose = document.getElementById('btn-close-settings');
+
+  function openDrawer() {
+    drawer?.classList.add('open');
+    drawer?.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeDrawer() {
+    drawer?.classList.remove('open');
+    drawer?.setAttribute('aria-hidden', 'true');
+  }
+
+  btnOpen?.addEventListener('click', openDrawer);
+  btnClose?.addEventListener('click', closeDrawer);
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer?.classList.contains('open')) {
+      closeDrawer();
+    }
+  });
+
+  // Sync settings UI with current values
+  function syncUI() {
+    const s = getSettings();
+    applySettings(s);
+
+    // Bg
+    document.querySelectorAll<HTMLButtonElement>('.theme-swatch').forEach((btn) => {
+      btn.classList.toggle('active', btn.dataset.bg === s.bg);
+    });
+
+    // Font
+    document.querySelectorAll<HTMLButtonElement>('#font-pills .pill-btn').forEach((btn) => {
+      btn.classList.toggle('active', btn.dataset.font === s.font);
+    });
+
+    // Size
+    const sizeInput = document.getElementById('setting-size') as HTMLInputElement | null;
+    const sizeVal = document.getElementById('val-size');
+    if (sizeInput && sizeVal) {
+      sizeInput.value = String(s.size);
+      sizeVal.textContent = `${s.size}px`;
+    }
+
+    // Line Height
+    document.querySelectorAll<HTMLButtonElement>('#lh-pills .pill-btn').forEach((btn) => {
+      btn.classList.toggle('active', String(btn.dataset.lh) === String(s.lh));
+    });
+
+    // Width
+    document.querySelectorAll<HTMLButtonElement>('#width-pills .pill-btn').forEach((btn) => {
+      btn.classList.toggle('active', String(btn.dataset.width) === String(s.width));
+    });
+  }
+
+  // Bind actions
+  document.querySelectorAll<HTMLButtonElement>('.theme-swatch').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const bg = btn.dataset.bg as any;
+      if (bg) {
+        saveSettings({ bg });
+        syncUI();
+      }
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('#font-pills .pill-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const font = btn.dataset.font as any;
+      if (font) {
+        saveSettings({ font });
+        syncUI();
+      }
+    });
+  });
+
+  const sizeInput = document.getElementById('setting-size') as HTMLInputElement | null;
+  sizeInput?.addEventListener('input', (e) => {
+    const size = parseInt((e.target as HTMLInputElement).value, 10);
+    if (!isNaN(size)) {
+      saveSettings({ size });
+      syncUI();
+    }
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('#lh-pills .pill-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const lh = parseFloat(btn.dataset.lh || '1.8');
+      if (!isNaN(lh)) {
+        saveSettings({ lh });
+        syncUI();
+      }
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('#width-pills .pill-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const width = parseInt(btn.dataset.width || '750', 10);
+      if (!isNaN(width)) {
+        saveSettings({ width });
+        syncUI();
+      }
+    });
+  });
+
+  syncUI();
+</script>

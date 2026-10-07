@@ -1,0 +1,31 @@
+---
+// Back to Top Component
+---
+<button
+  type="button"
+  class="back-to-top-btn"
+  id="btn-back-to-top"
+  aria-label="Cuộn về đầu trang"
+  title="Cuộn về đầu trang"
+>
+  ↑
+</button>
+
+<script>
+  const btn = document.getElementById('btn-back-to-top');
+
+  function checkScroll() {
+    if (!btn) return;
+    if (window.scrollY > 400) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  }
+
+  btn?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  window.addEventListener('scroll', checkScroll, { passive: true });
+</script>

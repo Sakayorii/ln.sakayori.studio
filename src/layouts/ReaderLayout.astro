@@ -1,0 +1,48 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import '../styles/reader.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const { title, description, ogImage } = Astro.props;
+---
+<BaseLayout title={title} description={description} ogImage={ogImage}>
+  <Fragment slot="head">
+    <script is:inline>
+      /* Zero-FOUC script: Executed synchronously before first paint */
+      (function() {
+        try {
+          var raw = localStorage.getItem('ln-reader-settings');
+          if (!raw) return;
+          var s = JSON.parse(raw);
+          var presets = {
+            hako: { bg: '#f4ecd8', fg: '#3d3428' },
+            cream: { bg: '#faf7ef', fg: '#2c2c2c' },
+            gray: { bg: '#d8d8d8', fg: '#333333' },
+            dark: { bg: '#18181b', fg: '#d4d4d8' }
+          };
+          var p = presets[s.bg] || presets.hako;
+          var style = document.documentElement.style;
+          style.setProperty('--read-bg', p.bg);
+          style.setProperty('--read-fg', p.fg);
+          if (s.font === 'sans') {
+            style.setProperty('--read-font', "'Be Vietnam Pro', system-ui, -apple-system, sans-serif");
+          } else {
+            style.setProperty('--read-font', "'Noto Serif', Georgia, serif");
+          }
+          if (s.size) style.setProperty('--read-size', s.size + 'px');
+          if (s.lh) style.setProperty('--read-lh', s.lh);
+          if (s.width) style.setProperty('--read-width', s.width + 'px');
+        } catch(e) {}
+      })();
+    </script>
+  </Fragment>
+
+  <div class="reader-shell">
+    <slot />
+  </div>
+</BaseLayout>

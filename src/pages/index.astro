@@ -1,0 +1,183 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SearchModal from '../components/SearchModal.astro';
+import BackToTop from '../components/BackToTop.astro';
+
+const novels = await getCollection('novels');
+const chapters = await getCollection('chapters');
+
+// Calculate statistics
+const totalChapters = chapters.length;
+const rezeroChapters = chapters.filter((c) => c.data.novel === 'rezero');
+
+// Group ReZero by Arc
+const rezeroArcs = new Map<number, typeof rezeroChapters>();
+for (const ch of rezeroChapters) {
+  const a = ch.data.arc;
+  if (!rezeroArcs.has(a)) rezeroArcs.set(a, []);
+  rezeroArcs.get(a)!.push(ch);
+}
+const sortedRezeroArcs = Array.from(rezeroArcs.entries()).sort((a, b) => a[0] - b[0]);
+---
+<BaseLayout title="Sakayori Studio | Cổng đọc Light Novel Trực tuyến">
+  <div style="min-height: 100vh; background: #f4ecd8; color: #3d3428; display: flex; flex-direction: column;">
+    <!-- Top Brand Bar -->
+    <header style="width: 100%; max-width: 900px; margin: 0 auto; padding: 28px 20px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #d5c8b5;">
+      <a href="/" style="display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: 0.08em; font-size: 15px;">
+        <img src="/logo.svg" alt="Sakayori Studio Logo" width="28" height="28" />
+        <span>SAKAYORI STUDIO</span>
+      </a>
+
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <button type="button" class="btn-icon" id="btn-open-search" style="border: 1px solid #d5c8b5; padding: 6px 14px; border-radius: 4px; font-size: 13px; font-family: 'Be Vietnam Pro', sans-serif;">
+          Tìm kiếm (/)
+        </button>
+      </div>
+    </header>
+
+    <main style="width: 100%; max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; flex: 1;">
+      <!-- Hero Atrium -->
+      <section style="text-align: center; margin-bottom: 50px; padding: 30px 20px; border: 1px solid #d5c8b5; border-radius: 8px; background: rgba(255, 255, 255, 0.45); box-shadow: inset 0 0 20px rgba(213, 200, 181, 0.3);">
+        <p style="font-family: 'Be Vietnam Pro', sans-serif; font-size: 12px; color: #b45309; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 10px;">
+          Thư viện Văn học Trực tuyến
+        </p>
+        <h1 style="font-size: clamp(28px, 4.5vw, 42px); font-weight: 700; line-height: 1.25; margin-bottom: 16px;">
+          Sakayori Light Novel Archive
+        </h1>
+        <p style="font-size: 16px; max-width: 620px; margin: 0 auto 20px; line-height: 1.7; opacity: 0.85;">
+          Không gian đọc tiểu thuyết tối giản, trung thực nguyên tác, loại bỏ hoàn toàn quảng cáo và hướng tới sự thư thái tối đa cho thị giác.
+        </p>
+
+        <!-- Dynamic Resume Card (Filled via client-side script) -->
+        <div id="resume-reading-card" style="display: none; max-width: 520px; margin: 24px auto 0; padding: 14px 18px; background: #1c1917; color: #f4ecd8; border-radius: 6px; text-align: left; font-family: 'Be Vietnam Pro', sans-serif; box-shadow: 0 4px 14px rgba(0,0,0,0.15);">
+          <div style="font-size: 11px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px;">Đang đọc dở gần đây</div>
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+            <div>
+              <strong id="resume-novel-title" style="display: block; font-size: 14px;"></strong>
+              <span id="resume-chapter-title" style="font-size: 12px; opacity: 0.85;"></span>
+            </div>
+            <a id="resume-chapter-link" href="#" style="display: inline-block; padding: 6px 14px; background: #b45309; color: #fff; font-size: 12px; font-weight: 600; border-radius: 4px; white-space: nowrap;">
+              Đọc tiếp →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Series Showcase -->
+      <section style="margin-bottom: 50px;">
+        <h2 style="font-size: 22px; font-weight: 700; margin-bottom: 24px; font-family: 'Be Vietnam Pro', sans-serif; display: flex; align-items: center; gap: 10px;">
+          <span>Tác phẩm chủ lực</span>
+          <span style="font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 12px; background: #b45309; color: #fff;">Chính thức</span>
+        </h2>
+
+        {novels.map((n) => (
+          <div style="border: 2px solid #d5c8b5; border-radius: 8px; background: rgba(255, 255, 255, 0.5); padding: 26px 28px; margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; margin-bottom: 16px;">
+              <div>
+                <span style="font-family: 'Be Vietnam Pro', sans-serif; font-size: 12px; color: #b45309; font-weight: 700; letter-spacing: 0.06em;">
+                  {n.data.originalTitle}
+                </span>
+                <h3 style="font-size: 26px; font-weight: 700; margin-top: 4px;">
+                  <a href={`/${n.id}/`} style="color: inherit; text-decoration: none;">
+                    {n.data.title}
+                  </a>
+                </h3>
+              </div>
+              <a
+                href={`/${n.id}/`}
+                style="padding: 8px 18px; background: #1c1917; color: #f4ecd8; border-radius: 4px; font-family: 'Be Vietnam Pro', sans-serif; font-size: 13px; font-weight: 600;"
+              >
+                Vào mục lục tác phẩm →
+              </a>
+            </div>
+
+            <p style="font-size: 15px; line-height: 1.7; opacity: 0.9; margin-bottom: 20px; text-align: justify;">
+              {n.data.summary}
+            </p>
+
+            <!-- Arcs Timeline / Matrix -->
+            <div style="border-top: 1px solid #d5c8b5; padding-top: 18px;">
+              <h4 style="font-family: 'Be Vietnam Pro', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; opacity: 0.8;">
+                Tiến độ dịch thuật các Arc:
+              </h4>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px;">
+                {sortedRezeroArcs.map(([arcNum, chList]) => (
+                  <div style="border: 1px solid #d5c8b5; border-radius: 4px; padding: 10px 12px; background: #fdfbf7;">
+                    <div style="font-family: 'Be Vietnam Pro', sans-serif; font-size: 13px; font-weight: 700;">
+                      Phần {arcNum} (Arc {arcNum})
+                    </div>
+                    <div style="font-family: 'Be Vietnam Pro', sans-serif; font-size: 12px; opacity: 0.7; margin-top: 2px;">
+                      {chList.length} chương hoàn tất
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <!-- Editorial Principles Block -->
+      <section style="border-top: 1px solid #d5c8b5; padding-top: 36px; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; font-family: 'Be Vietnam Pro', sans-serif;">
+        <div>
+          <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 8px; color: #b45309;">
+            Chuẩn văn học tự nhiên
+          </h4>
+          <p style="font-size: 13px; line-height: 1.6; opacity: 0.8;">
+            Tuyệt đối không dịch máy thô ráp, không tóm tắt, giữ trọn khẩu khí nhân vật và nhịp điệu của tiểu thuyết hiện đại.
+          </p>
+        </div>
+        <div>
+          <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 8px; color: #b45309;">
+            Trải nghiệm đọc Hako
+          </h4>
+          <p style="font-size: 13px; line-height: 1.6; opacity: 0.8;">
+            Tông màu vàng giấy êm dịu, tùy chỉnh phông chữ, cỡ chữ, và lưu vị trí đọc hoàn toàn cục bộ trên thiết bị của bạn.
+          </p>
+        </div>
+        <div>
+          <h4 style="font-size: 15px; font-weight: 700; margin-bottom: 8px; color: #b45309;">
+            Cộng đồng soát lỗi
+          </h4>
+          <p style="font-size: 13px; line-height: 1.6; opacity: 0.8;">
+            Dễ dàng bôi đen chữ để báo lỗi chính tả trực tiếp cho ban biên tập, cùng chung tay hoàn thiện bản dịch tốt nhất.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Site Footer -->
+    <footer style="padding: 32px 20px; border-top: 2px solid #d5c8b5; font-family: 'Be Vietnam Pro', sans-serif; font-size: 12px; opacity: 0.8; text-align: center; line-height: 1.7;">
+      <div style="max-width: 600px; margin: 0 auto;">
+        <p style="font-weight: 600; margin-bottom: 6px;">Sakayori Studio · Dự án phi thương mại</p>
+        <p>
+          Bản dịch tiếng Việt được thực hiện nhằm mục đích học tập và chia sẻ phi lợi nhuận. Toàn bộ bản quyền thuộc về tác giả Nagatsuki Tappei và đơn vị phát hành gốc Kadokawa / MF Bunko J.
+        </p>
+      </div>
+    </footer>
+
+    <SearchModal />
+    <BackToTop />
+  </div>
+</BaseLayout>
+
+<script>
+  import { loadResume } from '../utils/reader-settings';
+
+  const resume = loadResume();
+  if (resume && resume.url) {
+    const card = document.getElementById('resume-reading-card');
+    const novelEl = document.getElementById('resume-novel-title');
+    const chEl = document.getElementById('resume-chapter-title');
+    const linkEl = document.getElementById('resume-chapter-link') as HTMLAnchorElement | null;
+
+    if (card && novelEl && chEl && linkEl) {
+      novelEl.textContent = resume.novelTitle || 'Re:Zero';
+      chEl.textContent = `Chương ${resume.chapter}: ${resume.chapterTitle}`;
+      linkEl.href = resume.url;
+      card.style.display = 'block';
+    }
+  }
+</script>

@@ -1,0 +1,126 @@
+---
+// Pagefind Static Search Modal
+---
+<div class="modal-backdrop" id="search-modal" role="dialog" aria-modal="true" aria-labelledby="search-modal-title">
+  <div class="modal-card" style="max-width: 540px;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+      <h3 id="search-modal-title" style="margin-bottom:0;">Tìm kiếm chương</h3>
+      <button type="button" class="btn-icon" id="btn-close-search" aria-label="Đóng tìm kiếm">✕</button>
+    </div>
+
+    <input
+      type="search"
+      class="comment-input"
+      id="search-input"
+      placeholder="Nhập số chương hoặc tiêu đề..."
+      autocomplete="off"
+    />
+
+    <div id="search-results" style="max-height: 320px; overflow-y: auto; margin-top: 12px; font-size: 13px;">
+      <p style="opacity: 0.6; text-align: center; padding: 20px 0;">Gõ từ khóa để bắt đầu tìm kiếm...</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById('search-modal');
+  const btnOpen = document.getElementById('btn-open-search');
+  const btnClose = document.getElementById('btn-close-search');
+  const input = document.getElementById('search-input') as HTMLInputElement | null;
+  const resultsEl = document.getElementById('search-results');
+
+  let pagefind: any = null;
+
+  // Load Pagefind dynamically via script tag so Vite does not attempt to resolve it at build time
+  function loadPagefind(): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const w = window as any;
+      if (w.pagefind) return resolve(w.pagefind);
+      const s = document.createElement('script');
+      s.src = '/pagefind/pagefind.js';
+      s.onload = async () => {
+        try {
+          await w.pagefind.init();
+          resolve(w.pagefind);
+        } catch (e) {
+          reject(e);
+        }
+      };
+      s.onerror = () => reject(new Error('Pagefind load failed'));
+      document.head.appendChild(s);
+    });
+  }
+
+  async function ensurePagefind() {
+    if (pagefind) return pagefind;
+    try {
+      pagefind = await loadPagefind();
+    } catch {
+      pagefind = null;
+    }
+    return pagefind;
+  }
+
+  function openSearch() {
+    modal?.classList.add('open');
+    input?.focus();
+    ensurePagefind();
+  }
+
+  function closeSearch() {
+    modal?.classList.remove('open');
+    if (input) input.value = '';
+    if (resultsEl) resultsEl.innerHTML = '<p style="opacity: 0.6; text-align: center; padding: 20px 0;">Gõ từ khóa để bắt đầu tìm kiếm...</p>';
+  }
+
+  btnOpen?.addEventListener('click', openSearch);
+  btnClose?.addEventListener('click', closeSearch);
+
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) closeSearch();
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal?.classList.contains('open')) {
+      closeSearch();
+    }
+    const target = e.target as HTMLElement | null;
+    const isTyping = target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA');
+    if (!isTyping && (e.key === '/' || ((e.metaKey || e.ctrlKey) && e.key === 'k'))) {
+      e.preventDefault();
+      openSearch();
+    }
+  });
+
+  let searchTimeout: any;
+  input?.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(async () => {
+      const q = input?.value.trim() || '';
+      if (!q || !resultsEl) return;
+
+      const pf = await ensurePagefind();
+      if (!pf) {
+        resultsEl.innerHTML = '<p style="opacity: 0.6; text-align: center; padding: 20px 0;">Tìm kiếm hoạt động trên bản xuất bản tĩnh (production).</p>';
+        return;
+      }
+
+      resultsEl.innerHTML = '<p style="opacity: 0.6; text-align: center; padding: 20px 0;">Đang tìm kiếm...</p>';
+      const search = await pf.search(q);
+      const results = search?.results || [];
+
+      if (results.length === 0) {
+        resultsEl.innerHTML = '<p style="opacity: 0.6; text-align: center; padding: 20px 0;">Không tìm thấy kết quả phù hợp.</p>';
+        return;
+      }
+
+      const loaded = await Promise.all(results.slice(0, 8).map((r: any) => r.data()));
+      resultsEl.innerHTML = loaded.map((data: any) => `
+        <a href="${data.url}" style="display:block; padding: 8px 10px; border-bottom: 1px solid rgba(120, 113, 108, 0.15); border-radius: 4px;">
+          <strong style="color:#b45309;">${data.meta?.title || 'Chương truyện'}</strong>
+          <p style="opacity: 0.7; margin-top: 2px; font-size: 12px;">${data.excerpt || ''}</p>
+        </a>
+      `).join('');
+    }, 200);
+  });
+</script>

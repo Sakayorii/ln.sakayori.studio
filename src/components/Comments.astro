@@ -1,0 +1,184 @@
+---
+interface Props {
+  novel: string;
+  arc: number;
+  chapter: number;
+}
+
+const { novel, arc, chapter } = Astro.props;
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
+---
+<section
+  class="comments-section"
+  id="comments-root"
+  data-novel={novel}
+  data-arc={arc}
+  data-chapter={chapter}
+  data-sitekey={siteKey}
+>
+  <h3 class="comments-header">Bình luận độc giả</h3>
+
+  <!-- Form submit comment -->
+  <form class="comment-form" id="comment-form">
+    <input
+      type="text"
+      class="comment-input"
+      id="comment-author"
+      placeholder="Tên hiển thị của bạn (tối đa 30 ký tự)"
+      maxlength="30"
+      required
+    />
+    <textarea
+      class="comment-textarea"
+      id="comment-content"
+      placeholder="Để lại cảm nghĩ của bạn sau chương đọc (không chèn liên kết ngoài)..."
+      maxlength="500"
+      required
+    ></textarea>
+
+    <!-- Honeypot field -->
+    <input type="text" id="comment-hp-field" style="display:none;" tabindex="-1" autocomplete="off" />
+
+    <!-- Turnstile slot -->
+    <div id="comment-turnstile-slot" style="margin-bottom: 12px;"></div>
+
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <p class="comment-notice">Bình luận sẽ hiển thị công khai sau khi ban biên tập duyệt.</p>
+      <button type="submit" class="btn-primary" id="btn-submit-comment">Gửi bình luận</button>
+    </div>
+  </form>
+
+  <!-- Comments List -->
+  <div class="comments-list" id="comments-list">
+    <p style="font-size: 13px; opacity: 0.6; text-align: center; padding: 20px 0;">Đang nạp bình luận...</p>
+  </div>
+</section>
+
+<script>
+  import { showToast } from '../utils/reader-settings';
+
+  const root = document.getElementById('comments-root');
+  if (root) {
+    const novel = root.dataset.novel || 'rezero';
+    const arc = parseInt(root.dataset.arc || '1', 10);
+    const chapter = parseInt(root.dataset.chapter || '1', 10);
+    const siteKey = root.dataset.sitekey || '';
+
+    const listEl = document.getElementById('comments-list');
+    const formEl = document.getElementById('comment-form') as HTMLFormElement | null;
+    const authorEl = document.getElementById('comment-author') as HTMLInputElement | null;
+    const contentEl = document.getElementById('comment-content') as HTMLTextAreaElement | null;
+    const hpEl = document.getElementById('comment-hp-field') as HTMLInputElement | null;
+    const btnSubmit = document.getElementById('btn-submit-comment');
+
+    const formLoadTime = Date.now();
+    let turnstileWidgetId: any;
+
+    // Load existing approved comments
+    async function loadComments() {
+      if (!listEl) return;
+      try {
+        const res = await fetch(`/api/comments?novel=${encodeURIComponent(novel)}&arc=${arc}&chapter=${chapter}`);
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        const comments = data.comments || [];
+
+        if (comments.length === 0) {
+          listEl.innerHTML = '<p style="font-size: 13px; opacity: 0.6; text-align: center; padding: 20px 0;">Chưa có bình luận nào. Hãy là người đầu tiên để lại cảm nghĩ.</p>';
+          return;
+        }
+
+        listEl.innerHTML = comments.map((c: any) => `
+          <div class="comment-card">
+            <div class="comment-meta">
+              <span class="comment-author">${escapeHtml(c.author_name)}</span>
+              <span>${formatDate(c.created_at)}</span>
+            </div>
+            <p class="comment-content">${escapeHtml(c.content)}</p>
+          </div>
+        `).join('');
+      } catch {
+        listEl.innerHTML = '<p style="font-size: 13px; opacity: 0.6; text-align: center; padding: 20px 0;">Không thể tải bình luận. Vui lòng thử lại sau.</p>';
+      }
+    }
+
+    function escapeHtml(str: string): string {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function formatDate(ts: number): string {
+      try {
+        const d = new Date(ts);
+        return d.toLocaleDateString('vi-VN', { month: 'short', day: 'numeric', year: 'numeric' });
+      } catch {
+        return '';
+      }
+    }
+
+    // Render turnstile on focus
+    function renderTurnstile() {
+      if (!siteKey || turnstileWidgetId !== undefined) return;
+      const slot = document.getElementById('comment-turnstile-slot');
+      if ((window as any).turnstile && slot) {
+        turnstileWidgetId = (window as any).turnstile.render(slot, { sitekey: siteKey });
+      }
+    }
+
+    authorEl?.addEventListener('focus', renderTurnstile);
+    contentEl?.addEventListener('focus', renderTurnstile);
+
+    formEl?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!authorEl || !contentEl || !btnSubmit) return;
+
+      const author = authorEl.value.trim();
+      const content = contentEl.value.trim();
+      if (!author || !content) return;
+
+      btnSubmit.setAttribute('disabled', 'true');
+
+      let token = '';
+      if (siteKey && (window as any).turnstile && turnstileWidgetId !== undefined) {
+        token = (window as any).turnstile.getResponse(turnstileWidgetId);
+      }
+
+      try {
+        const res = await fetch('/api/comments', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            novel,
+            arc,
+            chapter,
+            author_name: author,
+            content,
+            website_url: hpEl?.value || '',
+            t0: formLoadTime,
+            turnstileToken: token,
+          }),
+        });
+
+        if (res.status === 429) {
+          showToast('Bạn gửi quá nhanh. Vui lòng thử lại sau.');
+          return;
+        }
+
+        if (!res.ok) throw new Error();
+
+        contentEl.value = '';
+        showToast('Bình luận đã được ghi nhận và đang chờ duyệt.');
+      } catch {
+        showToast('Gửi bình luận chưa thành công. Vui lòng thử lại sau.');
+      } finally {
+        btnSubmit.removeAttribute('disabled');
+      }
+    });
+
+    loadComments();
+  }
+</script>

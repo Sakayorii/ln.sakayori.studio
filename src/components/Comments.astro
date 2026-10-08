@@ -25,6 +25,7 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
 
 <script>
   import { showToast } from '../utils/reader-settings';
+  import { toSvg } from '../utils/peek/index.js';
   const section = document.getElementById('comments') as HTMLElement;
   const novel = section.dataset.novel!;
   const arc = parseInt(section.dataset.arc!, 10);
@@ -51,7 +52,8 @@ const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
       for (const c of items) {
         const div = document.createElement('div');
         div.className = 'comment';
-        div.innerHTML = `<div class="who"><span>${esc(c.author_name)}</span><span class="when">${fmtTime(c.created_at)}</span></div><p class="what"></p>`;
+        const avatar = toSvg(c.author_name, { size: 40, square: false });
+        div.innerHTML = `<div class="who"><span class="avatar">${avatar}</span><span>${esc(c.author_name)}</span><span class="when">${fmtTime(c.created_at)}</span></div><p class="what"></p>`;
         (div.querySelector('.what') as HTMLElement).textContent = c.content;
         list.appendChild(div);
       }

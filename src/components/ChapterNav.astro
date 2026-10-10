@@ -4,21 +4,26 @@ interface NavItem {
   label: string;
 }
 
-interface Sibling {
+interface ChapterItem {
   chapter: number;
   title: string;
   url: string;
 }
 
+interface ArcGroup {
+  arc: number;
+  chapters: ChapterItem[];
+}
+
 interface Props {
   prev?: NavItem | null;
   next?: NavItem | null;
-  siblings?: Sibling[];
-  current: number;
+  arcGroups?: ArcGroup[];
+  currentUrl: string;
   bottom?: boolean;
 }
 
-const { prev, next, siblings = [], current, bottom = false } = Astro.props;
+const { prev, next, arcGroups = [], currentUrl, bottom = false } = Astro.props;
 ---
 <nav class="chapter-nav-bar" aria-label={bottom ? "Điều hướng cuối trang" : "Điều hướng đầu trang"}>
   {prev ? (
@@ -31,11 +36,15 @@ const { prev, next, siblings = [], current, bottom = false } = Astro.props;
     </span>
   )}
 
-  <select class="jump-select" aria-label="Nhảy nhanh đến chương" data-current-chapter={current}>
-    {siblings.map((s) => (
-      <option value={s.url} selected={s.chapter === current}>
-        Chương {s.chapter}: {s.title}
-      </option>
+  <select class="jump-select" aria-label="Nhảy nhanh đến chương" data-current-url={currentUrl}>
+    {arcGroups.map((g) => (
+      <optgroup label={`Phần ${g.arc} (Arc ${g.arc})`}>
+        {g.chapters.map((s) => (
+          <option value={s.url} selected={s.url === currentUrl}>
+            Chương {s.chapter}: {s.title}
+          </option>
+        ))}
+      </optgroup>
     ))}
   </select>
 

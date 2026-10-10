@@ -119,3 +119,56 @@ button {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
+
+/* Site Minimal Header & Buttons (Shared across all pages) */
+.reader-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  margin-bottom: 32px;
+  border-bottom: 1px solid rgba(120, 113, 108, 0.2);
+  font-family: 'Be Vietnam Pro', sans-serif;
+  font-size: 13px;
+}
+
+.reader-brand-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--read-fg, #3d3428);
+  opacity: 0.9;
+}
+
+.reader-brand-link img {
+  width: 24px;
+  height: 24px;
+}
+
+.reader-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: 1px solid rgba(120, 113, 108, 0.25);
+  color: var(--read-fg, #3d3428);
+  font-size: 13px;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  background: rgba(255, 255, 255, 0.4);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-icon:hover {
+  border-color: rgba(120, 113, 108, 0.6);
+  background: rgba(255, 255, 255, 0.8);
+}
+

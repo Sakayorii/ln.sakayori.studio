@@ -2,8 +2,9 @@
 interface Props {
   novelUrl?: string;
   novelTitle?: string;
+  showSettings?: boolean;
 }
-const { novelUrl, novelTitle } = Astro.props;
+const { novelUrl, novelTitle, showSettings = false } = Astro.props;
 ---
 <header class="reader-top-bar">
   <a href="/" class="reader-brand-link">
@@ -18,10 +19,13 @@ const { novelUrl, novelTitle } = Astro.props;
       </a>
     )}
     <button type="button" class="btn-icon" id="btn-open-search" title="Tìm kiếm">
-      Tìm kiếm
+      Tìm kiếm (/)
     </button>
-    <button type="button" class="btn-icon" id="btn-open-settings" title="Cài đặt đọc">
-      Cài đặt
-    </button>
+    {showSettings && (
+      <button type="button" class="btn-icon" id="btn-open-settings" title="Cài đặt đọc">
+        Cài đặt
+      </button>
+    )}
   </div>
 </header>
+

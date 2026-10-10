@@ -109,7 +109,7 @@ const sortedRezeroArcs = Array.from(rezeroArcs.entries()).sort((a, b) => a[0] - 
                       Phần {arcNum} (Arc {arcNum})
                     </div>
                     <div style="font-family: 'Be Vietnam Pro', sans-serif; font-size: 12px; opacity: 0.7; margin-top: 2px;">
-                      {chList.length} chương hoàn tất
+                      {arcNum === 10 ? `Đang tiến hành · ${chList.length} chương đã dịch` : `Trọn vẹn · ${chList.length} chương đã dịch`}
                     </div>
                   </div>
                 ))}

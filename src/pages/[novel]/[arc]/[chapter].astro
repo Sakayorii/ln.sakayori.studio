@@ -25,6 +25,29 @@ export async function getStaticPaths() {
     list.sort((a, b) => a.data.arc - b.data.arc || a.data.chapter - b.data.chapter);
   }
 
+  const arcGroupsByNovel = new Map<
+    string,
+    Array<{ arc: number; chapters: Array<{ chapter: number; title: string; url: string }> }>
+  >();
+  for (const [novelId, list] of byNovel.entries()) {
+    const arcsMap = new Map<number, Array<{ chapter: number; title: string; url: string }>>();
+    for (const e of list) {
+      if (!arcsMap.has(e.data.arc)) arcsMap.set(e.data.arc, []);
+      arcsMap.get(e.data.arc)!.push({
+        chapter: e.data.chapter,
+        title: e.data.title,
+        url: `/${e.data.novel}/arc-${e.data.arc}/chuong-${e.data.chapter}`,
+      });
+    }
+    arcGroupsByNovel.set(
+      novelId,
+      Array.from(arcsMap.entries()).map(([arcNum, chs]) => ({
+        arc: arcNum,
+        chapters: chs,
+      }))
+    );
+  }
+
   return chapters.map((entry) => {
     const list = byNovel.get(entry.data.novel)!;
     const i = list.findIndex((e) => e.id === entry.id);
@@ -49,19 +72,16 @@ export async function getStaticPaths() {
         novelTitle: novel?.data.title ?? entry.data.novel,
         prev: link(list[i - 1]),
         next: link(list[i + 1]),
-        siblings: list.map((e) => ({
-          chapter: e.data.chapter,
-          title: e.data.title,
-          url: `/${e.data.novel}/arc-${e.data.arc}/chuong-${e.data.chapter}`,
-        })),
+        arcGroups: arcGroupsByNovel.get(entry.data.novel) || [],
       },
     };
   });
 }
 
-const { entry, novelTitle, prev, next, siblings } = Astro.props;
+const { entry, novelTitle, prev, next, arcGroups } = Astro.props;
 const { Content } = await render(entry);
 const { novel, arc, chapter, title } = entry.data;
+const currentUrl = `/${novel}/arc-${arc}/chuong-${chapter}`;
 
 const rawBody = entry.body || '';
 const words = rawBody.split(/\s+/).filter(Boolean).length;
@@ -95,7 +115,7 @@ const description =
     data-chapter={chapter}
     data-title={title}
   >
-    <SiteHeader novelUrl={`/${novel}/`} novelTitle={novelTitle} />
+    <SiteHeader novelUrl={`/${novel}/`} novelTitle={novelTitle} showSettings={true} />
 
     <!-- Pagefind indexes ONLY this metadata block -->
     <div data-pagefind-body data-pagefind-meta={`title:${pageTitle}`}>
@@ -113,7 +133,7 @@ const description =
     </div>
 
     <!-- Top Navigation -->
-    <ChapterNav prev={prev} next={next} siblings={siblings} current={chapter} />
+    <ChapterNav prev={prev} next={next} arcGroups={arcGroups} currentUrl={currentUrl} />
 
     <!-- Chapter Prose Body -->
     <article class="chapter-prose" id="chapter-prose-body">
@@ -121,7 +141,7 @@ const description =
     </article>
 
     <!-- Bottom Navigation -->
-    <ChapterNav prev={prev} next={next} siblings={siblings} current={chapter} bottom />
+    <ChapterNav prev={prev} next={next} arcGroups={arcGroups} currentUrl={currentUrl} bottom />
 
     <!-- Typo Report & Comments -->
     <TypoReport novel={novel} arc={arc} chapter={chapter} />

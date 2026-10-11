@@ -48,6 +48,17 @@ const canonicalURL = new URL(Astro.url.pathname, 'https://ln.sakayori.studio');
     <slot name="head" />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Đến nội dung</a>
     <slot />
   </body>
 </html>
+<script>
+  document.querySelector<HTMLAnchorElement>('.skip-link')?.addEventListener('click', (event) => {
+    const content = document.getElementById('main-content');
+    if (!content) return;
+    event.preventDefault();
+    content.tabIndex = -1;
+    content.focus({ preventScroll: true });
+    content.scrollIntoView({ block: 'start' });
+  });
+</script>

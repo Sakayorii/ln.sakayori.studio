@@ -1,0 +1,5 @@
+LN dialogue punctuation fallback
+Source: https://github.com/google/fonts/blob/main/ofl/notosansjp/NotoSansJP%5Bwght%5D.ttf
+License: SIL Open Font License 1.1; see OFL-noto-dialogue.txt.
+Subset: U+3008–U+3011, U+3014–U+301B, generated with fontTools pyftsubset.
+Purpose: preserve source dialogue delimiters in both reader font families without loading a full Japanese font.

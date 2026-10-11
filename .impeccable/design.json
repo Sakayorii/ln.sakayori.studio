@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-11T00:00:00Z",
+  "title": "Design System: Sakayori Studio",
+  "extensions": {
+    "colorMeta": {
+      "accent": { "role": "primary", "displayName": "Ink violet" },
+      "header-bg": { "role": "primary", "displayName": "Deep violet masthead" },
+      "paper": { "role": "neutral", "displayName": "Cool library paper" },
+      "ink": { "role": "neutral", "displayName": "Library ink" },
+      "muted": { "role": "neutral", "displayName": "Muted interface text" },
+      "border": { "role": "neutral", "displayName": "Quiet dividers" },
+      "violet-sheet": { "role": "neutral", "displayName": "Reading continuity sheet" },
+      "read-hako-bg": { "role": "neutral", "displayName": "Hako reading paper" },
+      "read-cream-bg": { "role": "neutral", "displayName": "Cream reading paper" },
+      "read-gray-bg": { "role": "neutral", "displayName": "Gray reading paper" },
+      "read-dark-bg": { "role": "neutral", "displayName": "Night reading ground" }
+    },
+    "typographyMeta": {
+      "library-heading": { "displayName": "Library heading", "purpose": "Discovery heading; bold sans, not serif display." },
+      "chapter-title": { "displayName": "Chapter opener", "purpose": "Sans heading distinct from adjustable narrative prose." },
+      "reader-default": { "displayName": "Default prose", "purpose": "Defaults only; reader size, line height and width remain configurable." },
+      "reader-sans": { "displayName": "Alternate prose", "purpose": "User-selected sans narrative with local punctuation fallback." }
+    },
+    "shadows": [
+      { "name": "title-plate", "value": "0 10px 24px #30264219", "purpose": "Typographic title plate only." },
+      { "name": "library-modal", "value": "0 16px 48px #16102233", "purpose": "Library search card." },
+      { "name": "reader-modal", "value": "0 8px 30px rgba(0, 0, 0, 0.2)", "purpose": "Reader modal override." },
+      { "name": "settings-drawer", "value": "-4px 0 20px rgba(0, 0, 0, 0.15)", "purpose": "Right-hand modal settings pause." },
+      { "name": "utility-overlay", "value": "0 4px 12px rgba(0, 0, 0, 0.25)", "purpose": "Toast and typo-selection action." }
+    ],
+    "motion": [
+      { "name": "reader-palette", "value": "background-color 0.2s ease, color 0.2s ease", "purpose": "Reader preset changes." },
+      { "name": "reader-navigation", "value": "all 0.15s ease", "purpose": "Implemented navigation-link transition." },
+      { "name": "settings-slide", "value": "transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Explicitly opened right drawer; backdrop pauses reading." },
+      { "name": "progress", "value": "transform 0.1s linear", "purpose": "Left-origin scaleX reading progress." },
+      { "name": "toast", "value": "opacity 0.2s ease, transform 0.2s ease", "purpose": "Temporary utility notification." },
+      { "name": "reduced-motion-css", "value": "transition-duration: 0s !important; animation-duration: 0s !important; scroll-behavior: auto !important", "purpose": "CSS reduced-motion override; does not guarantee suppression of JavaScript smooth scrolling." }
+    ],
+    "breakpoints": [
+      { "name": "mobile-layout", "value": "700px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary library action",
+      "kind": "button",
+      "refersTo": "action-primary",
+      "description": "Solid violet contents/resume action; minimum height 46px.",
+      "html": "<a class=\"ds-primary\" href=\"/rezero/\">Mở mục lục <span aria-hidden=\"true\">→</span></a>",
+      "css": ".ds-primary{display:inline-flex;align-items:center;justify-content:center;gap:14px;padding:12px 20px;min-height:46px;border-radius:7px;background:var(--color-accent,#554183);color:#fff;font-family:var(--ui-font,'Be Vietnam Pro',sans-serif);font-size:14px;font-weight:700;text-decoration:none}.ds-primary:hover{background:#403063}.ds-primary:focus-visible{outline:3px solid #8e75ba;outline-offset:4px}"
+    },
+    {
+      "name": "Underlined library link",
+      "kind": "button",
+      "refersTo": "text-link",
+      "description": "Secondary textual action without a filled container.",
+      "html": "<a class=\"ds-text-link\" href=\"/\">← Thư viện</a>",
+      "css": ".ds-text-link{font-family:var(--ui-font,'Be Vietnam Pro',sans-serif);font-size:14px;color:var(--color-accent,#554183);text-decoration:underline;text-underline-offset:.2em}.ds-text-link:focus-visible{outline:3px solid #8e75ba;outline-offset:4px}"
+    },
+    {
+      "name": "Library masthead navigation",
+      "kind": "nav",
+      "refersTo": "header-action",
+      "description": "Compact text-and-icon actions against deep violet; reader uses preset-derived overrides.",
+      "html": "<nav class=\"ds-masthead\" aria-label=\"Công cụ đọc\"><a class=\"ds-brand\" href=\"/\">Sakayori<span class=\"ds-secondary\"> Studio</span></a><button class=\"ds-header-action\" type=\"button\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" aria-hidden=\"true\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"/><path d=\"m16 16 5 5\"/></svg>Tìm kiếm</button></nav>",
+      "css": ".ds-masthead{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 24px;background:var(--header-bg,#302642);color:#f6f2fc;font-family:var(--ui-font,'Be Vietnam Pro',sans-serif)}.ds-brand{font-size:18px;font-weight:700;color:inherit;text-decoration:none;white-space:nowrap}.ds-secondary{font-weight:400;color:#d9cfe9}.ds-header-action{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 14px;border:0;border-radius:7px;background:none;color:inherit;font:400 14px/1.4 var(--ui-font,'Be Vietnam Pro',sans-serif);cursor:pointer}.ds-header-action:hover{background:#493b60}.ds-masthead :focus-visible{outline:3px solid #dbc6ff;outline-offset:4px}@media(max-width:700px){.ds-masthead{padding:12px 16px;gap:8px}.ds-brand{font-size:16px}.ds-secondary{display:none}.ds-header-action{padding:10px;font-size:13px;gap:6px}}"
+    },
+    {
+      "name": "Typographic title plate",
+      "kind": "card",
+      "refersTo": "title-plate",
+      "description": "Authored title treatment, not a publisher cover. Source layout allocates a 220px desktop column.",
+      "html": "<a class=\"ds-title-plate\" href=\"/rezero/\" aria-label=\"Mục lục Re:Zero\"><span class=\"ds-plate-publisher\">Sakayori Studio</span><span class=\"ds-plate-title\">Re:Zero</span><span class=\"ds-plate-original\">kara Hajimeru Isekai Seikatsu</span><span class=\"ds-plate-edition\">Bản dịch tiếng Việt</span></a>",
+      "css": ".ds-title-plate{aspect-ratio:2/3;background:#443360;color:#f8f3ff;padding:24px;display:flex;flex-direction:column;border-radius:3px 10px 10px 3px;box-shadow:0 10px 24px #30264219;border:1px solid #615075;font-family:var(--ui-font,'Be Vietnam Pro',sans-serif);text-decoration:none}.ds-plate-publisher{font-size:12px;color:#ded1ee}.ds-plate-title{font-size:36px;font-weight:700;letter-spacing:-.035em;line-height:1.2;margin-top:auto;overflow-wrap:break-word}.ds-plate-original{font-size:13px;line-height:1.8;margin-top:16px;color:#ded1ee}.ds-plate-edition{margin-top:auto;padding-top:32px;font-size:12px;color:#ded1ee}.ds-title-plate:focus-visible{outline:3px solid #8e75ba;outline-offset:4px}@media(max-width:700px){.ds-title-plate{padding:14px}.ds-plate-title{font-size:16px;white-space:nowrap}.ds-plate-publisher{font-size:10px}.ds-plate-original,.ds-plate-edition{display:none}}"
+    },
+    {
+      "name": "Resume reading sheet",
+      "kind": "card",
+      "refersTo": "resume-reading",
+      "description": "Preview of the conditional local reading-location block; actual title and detail come from saved progress.",
+      "html": "<section class=\"ds-resume\" aria-label=\"Tiếp tục đọc\"><div class=\"ds-resume-description\"><span class=\"ds-resume-label\">Đang đọc</span><strong>Re:Zero</strong><span class=\"ds-resume-detail\">Vị trí đọc được lưu trên thiết bị</span></div><a class=\"ds-resume-action\" href=\"/rezero/\">Đọc tiếp <span aria-hidden=\"true\">→</span></a></section>",
+      "css": ".ds-resume{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:22px 24px;background:#ede8f4;border-radius:8px;color:var(--color-ink,#242331);font-family:var(--ui-font,'Be Vietnam Pro',sans-serif)}.ds-resume-description{display:grid;gap:6px;min-width:0}.ds-resume-label{font-size:12px;color:#584876}.ds-resume-description strong{font-size:15px}.ds-resume-detail{font-size:13px;color:#584876;overflow-wrap:anywhere}.ds-resume-action{display:inline-flex;align-items:center;justify-content:center;gap:14px;padding:12px 20px;min-height:46px;border-radius:7px;background:var(--color-accent,#554183);color:#fff;font-size:14px;font-weight:700;flex-shrink:0;text-decoration:none}.ds-resume-action:hover{background:#403063}.ds-resume-action:focus-visible{outline:3px solid #8e75ba;outline-offset:4px}@media(max-width:700px){.ds-resume{padding:18px;gap:18px;flex-wrap:wrap}}"
+    },
+    {
+      "name": "Current chapter row",
+      "kind": "custom",
+      "refersTo": "chapter-row-current",
+      "description": "Full-row anchor with textual current-reading marker and tabular chapter number.",
+      "html": "<a class=\"ds-chapter-row ds-current\" href=\"/rezero/arc-7/chuong-49\" aria-current=\"location\"><span class=\"ds-chapter-number\">49</span><span class=\"ds-chapter-title\">Chương 49</span><span class=\"ds-reading-marker\">Đang đọc</span><span class=\"ds-chapter-arrow\" aria-hidden=\"true\">→</span></a>",
+      "css": ".ds-chapter-row{display:grid;grid-template-columns:44px 1fr auto auto;align-items:center;gap:12px;padding:15px 12px;font-family:var(--ui-font,'Be Vietnam Pro',sans-serif);font-size:14px;line-height:1.6;border-radius:6px;text-decoration:none;color:var(--color-ink,#242331)}.ds-chapter-row:hover,.ds-current{background:#ede8f4;color:var(--color-accent,#554183)}.ds-current{font-weight:700}.ds-chapter-number{color:var(--color-muted,#646272);font-size:13px;font-variant-numeric:tabular-nums}.ds-chapter-title{overflow-wrap:anywhere}.ds-reading-marker{font-size:11px;font-weight:400;color:#584876}.ds-chapter-arrow{color:var(--color-muted,#646272)}.ds-chapter-row:focus-visible{outline:3px solid #8e75ba;outline-offset:4px}@media(max-width:700px){.ds-chapter-row{grid-template-columns:32px 1fr auto;gap:8px;padding:14px 4px}.ds-reading-marker{grid-column:2;grid-row:2}.ds-chapter-arrow{grid-column:3;grid-row:1}}"
+    },
+    {
+      "name": "Library search field",
+      "kind": "input",
+      "refersTo": "search-input",
+      "description": "Search-modal field with native type, accessible label and global focus treatment; reader overrides differ.",
+      "html": "<input class=\"ds-search-field\" type=\"search\" aria-label=\"Số chương hoặc tiêu đề\" placeholder=\"Nhập số chương hoặc tiêu đề…\" autocomplete=\"off\" />",
+      "css": ".ds-search-field{width:100%;min-height:46px;padding:12px;border:1px solid var(--color-border,#dfdee8);background:transparent;color:var(--color-ink,#242331);border-radius:6px;font-family:var(--ui-font,'Be Vietnam Pro',sans-serif);font-size:14px;caret-color:var(--color-accent,#554183)}.ds-search-field:focus-visible{outline:3px solid #8e75ba;outline-offset:4px}"
+    },
+    {
+      "name": "Reader chapter navigation link",
+      "kind": "button",
+      "refersTo": "reader-nav-link",
+      "description": "Preset-derived outlined navigation; desktop uses a selector between previous/next, mobile reflows it below.",
+      "html": "<a class=\"ds-reader-nav\" href=\"/rezero/arc-7/chuong-50\" rel=\"next\">Chương sau →</a>",
+      "css": ".ds-reader-nav{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:12px;min-height:46px;border:1px solid color-mix(in srgb,var(--read-fg,#3d3428) 25%,transparent);border-radius:7px;color:var(--read-fg,#3d3428);background:transparent;font-family:var(--ui-font,'Be Vietnam Pro',sans-serif);font-size:13px;white-space:nowrap;text-decoration:none;transition:all .15s ease}.ds-reader-nav:hover{background:color-mix(in srgb,var(--read-fg,#3d3428) 8%,transparent)}.ds-reader-nav:focus-visible{outline:3px solid var(--read-fg,#3d3428);outline-offset:4px}.ds-reader-nav.ds-disabled{opacity:.35;pointer-events:none}@media(prefers-reduced-motion:reduce){.ds-reader-nav{transition-duration:0s!important}}"
+    },
+    {
+      "name": "Selected reader preset",
+      "kind": "chip",
+      "refersTo": "theme-swatch",
+      "description": "Rectangular labeled theme choice; active foreground outline and aria-pressed, not a pill filter.",
+      "html": "<button class=\"ds-theme-swatch ds-theme-active\" type=\"button\" aria-pressed=\"true\"><span class=\"ds-theme-dot\" aria-hidden=\"true\"></span><span>Vàng giấy Hako</span></button>",
+      "css": ".ds-theme-swatch{display:flex;align-items:center;gap:8px;padding:8px 10px;min-height:44px;border-radius:4px;border:1px solid color-mix(in srgb,var(--read-fg,#3d3428) 25%,transparent);font-family:var(--ui-font,'Be Vietnam Pro',sans-serif);font-size:12px;font-weight:500;cursor:pointer;background:none;color:var(--read-fg,#3d3428);text-align:left}.ds-theme-active{border-color:var(--read-fg,#3d3428);outline:2px solid var(--read-fg,#3d3428)}.ds-theme-dot{width:14px;height:14px;border-radius:50%;border:1px solid rgba(0,0,0,.2);background:#f4ecd8}.ds-theme-swatch:focus-visible{outline:3px solid var(--read-fg,#3d3428);outline-offset:4px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Ink-violet reading library",
+    "overview": "This is the user-approved world implemented in the library, novel contents and chapter reader: ink-violet wayfinding, cool neutral sheets, compact rounded controls and open chapter lists. Interface typography is a clear Vietnamese sans; the default narrative face is serif. The reader can choose a sans narrative face without changing the interface hierarchy.\n\nThe library's identity does not repaint the reading page. Reading backgrounds and foregrounds remain paired presets, while reader chrome derives from the chosen pair. The title plate is an authored typographic link, not a publisher cover or an official-edition claim. No sales or marketing landing-page treatment belongs to this remake.",
+    "keyCharacteristics": [
+      "Ink-violet navigation on a cool neutral library ground.",
+      "Open lists and bounded reading columns rather than a repeated card grid.",
+      "Sans interface hierarchy; user-controlled prose typography and paper.",
+      "Explicit reading-state text, not color-only continuity.",
+      "Small state transitions; settings is an explicitly opened reading pause."
+    ],
+    "rules": [
+      { "name": "The Reader Pair Rule", "body": "Derive reader chrome from the selected foreground and background rather than importing fixed library text colors. The reader masthead mixes background (92%) with foreground; its border mixes foreground (18%) with transparency. Control borders use foreground (25%), hover fills (8%); header-action hover uses foreground (10%). Reader focus and range accent use foreground directly. Reader selection reverses foreground and background.", "section": "colors" }
+    ],
+    "dos": [
+      "Do use the library palette for discovery and selected reader pairs for chapter chrome.",
+      "Do retain sans interface headings and user-controlled narrative typography.",
+      "Do retain open chapter rows, native Arc disclosures and visible reading-state text.",
+      "Do preserve chapter URLs, storage keys and existing reader preset values.",
+      "Do keep the punctuation fallback local and retain its source and OFL files.",
+      "Do describe verification at its actual scope: six resolved fixes and opening-reader evidence."
+    ],
+    "donts": [
+      "Don't turn this reading portal into a sales or marketing landing page.",
+      "Don't present the typographic title plate as sourced publisher cover artwork.",
+      "Don't replace the reader presets with the library's cool-paper/violet palette.",
+      "Don't claim whole-site accessibility, every-chapter QA, backend readiness or universal zero-flash behavior from this review.",
+      "Don't claim that all reading utilities are non-floating or all scripted motion respects reduced motion.",
+      "Don't change story content, UI factual claims or product capabilities while applying these visual rules."
+    ]
+  }
+}

@@ -18,13 +18,13 @@
     const bodyTop = body.offsetTop;
     
     if (visibleTop < bodyTop) {
-      thumb.style.width = '0%';
+      thumb.style.transform = 'scaleX(0)';
       return;
     }
     
     const scrolled = visibleTop - bodyTop;
     const pct = Math.min(100, Math.max(0, (scrolled / (totalHeight - window.innerHeight + 100)) * 100));
-    thumb.style.width = `${pct}%`;
+    thumb.style.transform = `scaleX(${pct / 100})`;
   }
 
   window.addEventListener('scroll', updateProgress, { passive: true });

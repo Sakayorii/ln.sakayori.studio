@@ -105,6 +105,7 @@ const description =
 ---
 <ReaderLayout title={pageTitle} description={description}>
   <ProgressBar />
+  <SiteHeader novelUrl={`/${novel}/`} novelTitle={novelTitle} showSettings={true} />
 
   <main
     class="reader-container"
@@ -115,7 +116,7 @@ const description =
     data-chapter={chapter}
     data-title={title}
   >
-    <SiteHeader novelUrl={`/${novel}/`} novelTitle={novelTitle} showSettings={true} />
+    <span id="main-content" tabindex="-1"></span>
 
     <!-- Pagefind indexes ONLY this metadata block -->
     <div data-pagefind-body data-pagefind-meta={`title:${pageTitle}`}>

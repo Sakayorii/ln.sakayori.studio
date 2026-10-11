@@ -16,15 +16,22 @@ Astro SSG (Static Site Generation) triển khai trên Cloudflare Pages, Pages Fu
 
 ## Product Purpose
 
-Cổng đọc Light Novel đa tác phẩm (Multi-series) phi thương mại của Sakayori Studio. Khởi đầu với Re:Zero kara Hajimeru Isekai Seikatsu (Arc 7 đến Arc 10) và mở rộng cho các bộ tiểu thuyết khác trong tương lai. Mục tiêu là tạo ra chuẩn mực trải nghiệm đọc tiểu thuyết số: tải trang tức thì, nhẹ nhàng, tôn trọng thị giác và hoàn toàn độc lập về hạ tầng.
+Cổng đọc Light Novel đa tác phẩm (Multi-series) phi thương mại của Sakayori Studio. Hiện có Re:Zero kara Hajimeru Isekai Seikatsu, Arc 7 đến Arc 10. Người dùng vào để tìm truyện, chọn chương và đọc; không phải để mua sản phẩm hay xem trang giới thiệu dịch vụ. Thành công là dễ tìm đúng chương, tiếp tục chỗ đang đọc và đọc lâu mà không bị giao diện cản trở.
+
+### Ranh giới được người dùng yêu cầu (2026-10-11)
+
+- Đây là **web đọc LN, không phải web bán hàng hoặc landing page**. Không tự thêm cấu trúc tiếp thị, pricing, khối quảng bá chất lượng, testimonial hay CTA bán hàng.
+- Người dùng muốn remake giao diện hiện tại, không chỉ chỉnh đẹp lại giao diện cũ. Remake không đồng nghĩa xóa nội dung truyện, định tuyến, dữ liệu hoặc chức năng đọc.
+- Bố cục chi tiết chưa được người dùng chốt; người dùng không có sẵn phương án UX. Mọi đề xuất bố cục phải phục vụ việc tìm và đọc truyện, không biến đề xuất của agent thành yêu cầu đã được duyệt.
+- Không tự mở rộng sang tài khoản, thanh toán, diễn đàn, xếp hạng, gamification hoặc tính năng sản phẩm mới trong đợt remake.
 
 ## Positioning
 
-Kế thừa và nâng cấp linh hồn trải nghiệm đọc thân thiện của Hako Reader (nền vàng giấy dịu mắt, tùy chỉnh linh hoạt) trên nền tảng kỹ thuật hiện đại: hoàn toàn tĩnh, không FOUC (Flash of Unstyled Content), không phần mềm theo dõi hay quảng cáo, và bảo vệ bản quyền phi thương mại nghiêm ngặt.
+Cổng truy cập bản dịch của Sakayori Studio với công cụ đọc tùy chỉnh và lưu tiến độ cục bộ. Không quảng cáo hoặc phần mềm theo dõi. Hako Reader là tham chiếu chức năng đọc từ tài liệu cũ, không phải yêu cầu giữ nguyên giao diện hoặc màu sắc hiện tại khi remake. Nội dung chương được tạo tĩnh; các tương tác gửi dữ liệu dùng Pages Functions.
 
 ## Operating Context
 
-Môi trường đọc thực tế trên trình duyệt web điện thoại và máy tính. Người đọc thường trải qua các phiên đọc dài từ 15 đến 60 phút ở nhiều điều kiện ánh sáng. Họ cần hệ thống ghi nhớ tiến độ đọc tin cậy, điều hướng chương trước/sau tiện lợi ở cả hai đầu trang, và các công cụ tương tác tinh gọn (báo lỗi chính tả, bình luận phản hồi).
+Môi trường đọc trên trình duyệt điện thoại và máy tính, ở nhiều điều kiện ánh sáng. Ưu tiên các phiên đọc dài; chưa có nghiên cứu xác nhận thời lượng đọc cụ thể. Luồng chính là tìm tác phẩm → chọn Arc/chương → đọc → chuyển chương hoặc trở lại chỗ đang đọc. Ghi nhớ tiến độ, điều hướng chương trước/sau và cài đặt đọc phải dễ dùng. Bình luận và báo lỗi là công cụ phụ, không được lấn át văn bản.
 
 ## Capabilities and Constraints
 
@@ -43,26 +50,30 @@ Môi trường đọc thực tế trên trình duyệt web điện thoại và m
 - **Phông chữ tự host:** File `.woff2` lưu trực tiếp trong `public/fonts/`, không gọi mạng ngoài.
 - **Dự phòng dữ liệu:** Sao lưu D1 qua `wrangler d1 export` định kỳ.
 
+Các khả năng trên mô tả kiến trúc và chức năng hiện có/dự kiến, không phải bằng chứng đã kiểm thử trên production. D1, Turnstile và webhook phụ thuộc cấu hình môi trường; chưa xác nhận chúng hoạt động trên preview. Remake giao diện không bao gồm tự cấu hình backend hoặc deploy. Giữ định dạng Markdown/frontmatter, URL chương và khóa localStorage để không mất liên kết hay tiến độ đọc cũ. Các preset và thông số hiện hành là dữ liệu tương thích cần xét, không phải bảng màu khóa cho giao diện mới.
+
 ## Brand Commitments
 
 - **Tên thương hiệu:** Sakayori Studio.
-- **Nhận diện hình ảnh:** Tự thiết kế Logo SVG và OpenGraph Typography độc lập; không sử dụng hình ảnh nhân vật anime hoặc logo của nhà xuất bản gốc để đảm bảo an toàn bản quyền.
+- **Nhận diện hình ảnh:** Giữ thương hiệu Sakayori Studio. Theo xác nhận mới 2026-10-11, được dùng **bìa truyện có nguồn**; không còn cấm tuyệt đối ảnh bìa như tài liệu cũ. Ghi nguồn và xác minh điều kiện sử dụng trước khi đưa tài sản ngoài vào web; có nguồn không tự chứng minh có quyền sử dụng. Không tạo ấn tượng là trang chính thức của tác giả/nhà xuất bản. Chưa chọn bìa cụ thể.
 - **Quy ước văn bản giao diện (UI Copy):** Tiếng Việt chuẩn mực, tối giản, không sử dụng em dash trong UI, loại bỏ hoàn toàn các từ ngữ mang tính chất tiếp thị hoặc số liệu tuyệt đối.
 - **Pháp lý:** Footer đính kèm tuyên bố miễn trừ trách nhiệm phi thương mại rõ ràng.
 
 ## Evidence on Hand
 
-- Toàn bộ nội dung bản dịch Markdown chuẩn văn học của Re:Zero Arc 7 (từ Ch 49 đến hết), Arc 8 (78 chương), Arc 9 (63 chương), và Arc 10 (Ch 1 đến 7) sẵn sàng tại `rezero-vi/text/arc/`.
+- Nội dung web nằm tại `src/content/chapters/rezero/`, metadata tác phẩm tại `src/content/novels/rezero.json`. Sau push 2026-10-11: 278 tệp chương, gồm Arc 7: 110, Arc 8: 78, Arc 9: 63, Arc 10: 27. Arc 10 tệp 28–30 chưa được đưa lên web.
+- Nguồn dịch workspace: `/root/project02/rezero-vi/text/arc/`; trạng thái biên tập/QA được quản lý riêng tại `/root/project02/rezero-translation/`. Có tệp hoặc được push không đồng nghĩa đã nghiệm thu độc lập; không dùng số lượng làm lời quảng bá chất lượng.
+- Logo và font hiện có trong `public/`. Chưa có bằng chứng duyệt quyền sử dụng một bìa ngoài cụ thể. Không bịa nhãn “Chính thức”, cam kết chất lượng tuyệt đối, người dùng, đánh giá hay chứng nhận.
 
 ## Product Principles
 
 1. **Reader First:** Mọi quyết định thiết kế đều phải phục vụ cảm giác đọc thoải mái nhất cho mắt, loại bỏ mọi hiệu ứng thừa thãi gây phân tâm.
 2. **Zero Dependencies Overhead:** Không dùng framework nặng cho tương tác client; tận dụng CSS variables và vanilla JS để đạt hiệu năng tối đa.
-3. **Uncompromising Data Independence:** Dữ liệu thuộc quyền sở hữu nội bộ trên Cloudflare D1, loại bỏ phụ thuộc vào các dịch vụ bên thứ ba kém ổn định.
+3. **Giữ dữ liệu và tính liên tục:** Nội dung truyện lưu trong repo, tương tác dùng hạ tầng nội bộ D1; giữ tiến độ cục bộ và URL cũ. Không đánh đổi chức năng để trang nhìn đẹp hơn.
 4. **Multi-Series Architecture:** Cấu trúc dữ liệu và routing được thiết kế sẵn sàng cho việc bổ sung nhiều bộ tiểu thuyết khác nhau mà không cần tái cấu trúc mã nguồn.
 
 ## Accessibility & Inclusion
 
-- Độ tương phản màu sắc đáp ứng tiêu chuẩn WCAG AA trên cả 4 bộ màu preset.
-- Điều hướng phím tắt đầy đủ (mũi tên trái/phải chuyển chương, phím Escape đóng panel).
-- Hỗ trợ trọn vẹn bộ gõ tiếng Việt và hiển thị sắc nét trên mọi mật độ điểm ảnh (Retina / OLED).
+- Mục tiêu: WCAG AA về tương phản, điều khiển dùng được bằng bàn phím, focus rõ, hỗ trợ giảm chuyển động. Không ghi là đã đạt nếu chưa kiểm chứng.
+- Bảo toàn phím tắt chuyển chương/đóng panel, không kích hoạt khi người đọc đang nhập nội dung vào form.
+- Font phải đủ dấu tiếng Việt; bố cục không cắt chữ/điều khiển trên màn hình nhỏ hoặc khi tăng cỡ chữ. Mobile web vẫn là web, không giả lập ứng dụng native.

@@ -63,8 +63,8 @@ export function applySettings(s: ReaderSettings): void {
   root.style.setProperty(
     '--read-font',
     s.font === 'sans'
-      ? "'Be Vietnam Pro', system-ui, -apple-system, sans-serif"
-      : "'Noto Serif', Georgia, serif"
+      ? "'Be Vietnam Pro', 'LN Punctuation', system-ui, -apple-system, sans-serif"
+      : "'Noto Serif', 'LN Punctuation', Georgia, serif"
   );
   root.style.setProperty('--read-size', `${s.size}px`);
   root.style.setProperty('--read-lh', `${s.lh}`);

@@ -13,18 +13,16 @@ const { novelTitle, novelUrl, arc, chapter, title, words, minutes } = Astro.prop
 ---
 <header class="chapter-ledger-header">
   <nav class="breadcrumb-trail" aria-label="Điều hướng phân cấp">
-    <a href="/">Trang chủ</a>
+    <a href="/">Thư viện</a>
     <span>/</span>
     <a href={novelUrl}>{novelTitle}</a>
     <span>/</span>
-    <span>Arc {arc}</span>
+    <a href={`${novelUrl}#arc-${arc}`}>Arc {arc}</a>
     <span>/</span>
     <span>Chương {chapter}</span>
   </nav>
 
-  <h1 class="chapter-main-title">
-    Chương {chapter}: {title}
-  </h1>
+  <h1 class="chapter-main-title">Chương {chapter}: {title}</h1>
 
   <div class="chapter-meta-bar">
     <span>{words.toLocaleString('vi-VN')} từ</span>

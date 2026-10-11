@@ -6,26 +6,28 @@ interface Props {
 }
 const { novelUrl, novelTitle, showSettings = false } = Astro.props;
 ---
-<header class="reader-top-bar">
-  <a href="/" class="reader-brand-link">
-    <img src="/logo.svg" alt="Sakayori Studio Logo" width="24" height="24" />
-    <span>SAKAYORI STUDIO</span>
+<header class:list={['site-header', { 'site-header-reader': showSettings }]}>
+ <div class="site-header-inner">
+  <a href="/" class="site-brand">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 5h6a4 4 0 0 1 3 1.5A4 4 0 0 1 15 5h6v14h-6a4 4 0 0 0-3 1.5A4 4 0 0 0 9 19H3z"/><path d="M12 7v13"/></svg>
+    <span>Sakayori<span class="brand-secondary"> Studio</span></span>
   </a>
-
-  <div class="reader-actions">
+  <nav class="site-actions" aria-label="Công cụ đọc">
     {novelUrl && (
-      <a href={novelUrl} class="btn-icon" title={novelTitle || 'Danh sách chương'}>
+      <a href={novelUrl} class="header-action" title={novelTitle || 'Danh sách chương'}>
         Mục lục
       </a>
     )}
-    <button type="button" class="btn-icon" id="btn-open-search" title="Tìm kiếm">
-      Tìm kiếm (/)
+    <button type="button" class="header-action" id="btn-open-search" title="Tìm kiếm (phím /)">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+      <span>Tìm kiếm</span>
     </button>
     {showSettings && (
-      <button type="button" class="btn-icon" id="btn-open-settings" title="Cài đặt đọc">
-        Cài đặt
+      <button type="button" class="header-action" id="btn-open-settings" title="Cài đặt đọc" aria-controls="utility-drawer" aria-expanded="false">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="2.5" fill="var(--header-bg)"/><circle cx="15" cy="17" r="2.5" fill="var(--header-bg)"/></svg>
+        <span>Cài đặt</span>
       </button>
     )}
-  </div>
+  </nav>
+ </div>
 </header>
-

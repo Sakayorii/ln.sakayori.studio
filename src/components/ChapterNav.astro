@@ -70,7 +70,7 @@ const { prev, next, arcGroups = [], currentUrl, bottom = false } = Astro.props;
   // Keyboard navigation: Left/Right arrows (only if not typing in inputs)
   window.addEventListener('keydown', (e) => {
     const target = e.target as HTMLElement | null;
-    if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT')) {
+    if (e.altKey || e.ctrlKey || e.metaKey || target?.isContentEditable || document.querySelector('.modal-backdrop.open, .utility-drawer.open') || (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.tagName === 'SELECT'))) {
       return;
     }
     if (e.key === 'ArrowLeft') {

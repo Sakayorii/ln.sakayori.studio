@@ -1,0 +1,38 @@
+---
+interface Props { novel?: string; }
+const { novel } = Astro.props;
+---
+<section class="resume-reading" id="resume-reading" data-novel={novel} hidden aria-label="Tiếp tục đọc">
+  <div class="resume-description">
+    <span class="resume-label">Đang đọc</span>
+    <strong id="resume-title"></strong>
+    <span id="resume-detail"></span>
+  </div>
+  <a class="action-primary" id="resume-link" href="/">Đọc tiếp <span aria-hidden="true">→</span></a>
+</section>
+<script>
+  import { loadResume } from '../utils/reader-settings';
+  const resume = loadResume();
+  const section = document.getElementById('resume-reading');
+  if (resume && section && (!section.dataset.novel || section.dataset.novel === resume.novel)) {
+    try {
+      const url = new URL(resume.url, location.origin);
+      if (url.origin === location.origin && /^\/[^/]+\/arc-\d+\/chuong-\d+\/?$/.test(url.pathname)) {
+        const link = document.getElementById('resume-link') as HTMLAnchorElement;
+        link.href = url.pathname;
+        document.getElementById('resume-title')!.textContent = resume.novelTitle;
+        document.getElementById('resume-detail')!.textContent = `Arc ${resume.arc} · Chương ${resume.chapter}: ${resume.chapterTitle}`;
+        section.hidden = false;
+        const current = Array.from(document.querySelectorAll<HTMLAnchorElement>('.chapter-row')).find((a) => new URL(a.href).pathname === url.pathname);
+        if (current) {
+          current.classList.add('is-reading');
+          current.setAttribute('aria-current', 'location');
+          const marker = current.querySelector<HTMLElement>('.reading-marker');
+          if (marker) marker.hidden = false;
+          const details = current.closest('details');
+          if (details) details.open = true;
+        }
+      }
+    } catch { /* Invalid or old progress must not break navigation. */ }
+  }
+</script>

@@ -39,7 +39,7 @@ Trước mắt là……
 
 Melty cũng bị đâm như Subaru, cần được chữa trị ngay.
 Subaru gọi lớn, mặc cho vết thương còn đang lành bên hông bị kéo đau nhói. Crusch đáp lời rồi dùng ma pháp tạo gió, nhẹ nhàng hất Melty đang nằm dưới đất bay tới.
-Vẫn cõng Ferris trên lưng, Subaru đón lấy cơ thể bay theo đường vòng cung ấy.
+Vẫn cõng Ferris trên lưng, Subaru chuẩn bị đón lấy cơ thể bay theo đường vòng cung ấy.
 
 「Thiên Ý Vô Hình.」
 
@@ -52,7 +52,7 @@ Vận dụng cánh tay thứ ba vừa xuất hiện, cậu vất vả lắm mớ
 「Không cần cậu nhắc đâu, hai đồ ngốc!」
 
 Trước nụ cười gắng gượng dù đang đau đớn của Melty, Subaru cũng giơ ngón tay cái lên.
-Nhìn việc chữa trị vết thương cho cô bắt đầu thông qua cơ thể mình đang ôm cô, cậu lại tung ra những quân bài có thể dùng trong tình cảnh này.
+Vẫn ôm Melty, Subaru thấy Ferris bắt đầu chữa vết thương cho cô qua cơ thể mình, rồi lại tung ra những quân bài có thể dùng trong tình cảnh này.
 
 「『Trái tim Sư Tử』, khởi động lại, hết công suất!」
 
@@ -78,7 +78,7 @@ Ferris đặt cằm lên vai Subaru từ phía sau, nhắm mắt, nghiêm túc b
 Vừa chữa trọng thương cho Subaru và Melty, vừa tìm nguyên nhân một căn bệnh khác, nghe thật quá sức. Nhưng với Ferris, cậu chỉ có niềm tin rằng anh sẽ làm được.
 Và trong khi giao việc xử lý những ảnh hưởng của 『Ngón áp út』 cậu nhận lấy chồng chất cho Ferris……
 
-「Chị Crusch! Chiến đi!」
+「Chị Crusch! Khai hỏa!」
 
 Cậu hò reo cổ vũ Crusch đang liên tục di chuyển nhanh nhẹn để ngăn địch tới gần họ.
 Có vẻ cô đã xuống đây qua cái lỗ trên trần tầng hầm, và giờ đang giao kiếm dữ dội với gã đàn ông vung lưỡi kéo cắt vải. Hình như hắn được gọi là Reborn.
@@ -124,7 +124,7 @@ Crusch nhanh nhẹn tránh trận mưa sao băng bằng gạch đá, nhưng khi 
 
 Ngay sau lời ấy, lượng nước mắt lớn vừa dâng sát sau nhãn cầu vội vã rút xuống. Đợt sóng bùng nổ cảm xúc cậu tưởng không sao chịu nổi lùi đi, và một hơi thở ngắn thoát khỏi cuống họng.
 Đó là sự giải thoát khỏi 『Chất độc』 của Bellaris đang định giày vò Subaru.
-Và đúng như lời Ferris, người đã qua mặt 『Ngón áp út』, tuyên bố, chủ nhân của anh khuất trong đám bụi cũng không yếu ớt đến mức bị những thứ bay tới ấy đè bẹp.
+Và đúng như lời Ferris vừa qua mặt 『Ngón áp út』 đã tuyên bố, chủ nhân của anh khuất trong đám bụi cũng không yếu ớt đến mức bị những thứ bay tới ấy đè bẹp.
 
 「……」
 
@@ -145,7 +145,7 @@ Ngay khi mệnh lệnh ấy vang lên, giọng Bellaris cất lên từ sâu tro
 Trong khoảnh khắc, Crusch vốn đang lao tới Reborn giữa không trung lại vung kiếm khi còn cách hắn khá xa.
 
 Không phải đao gió. Đó là đòn chém ma pháp, nhằm hủy đòn tấn công của địch.
-Thần kỹ mà 『Mắt rồng』 cho phép thực hiện, cắt đứt dấu hiệu ma pháp trước khi nó phát động, ngăn nó thành hình.
+Đó là thần kỹ nhờ 『Mắt rồng』, cắt đứt dấu hiệu ma pháp trước khi nó phát động, ngăn nó thành hình.
 Đòn ấy định ngăn hiện tượng sắp xảy ra giữa Crusch và Reborn. Nhưng ác ý đáng lẽ phải bị chém đứt lại chẳng bị chém đứt, và những ngọn lửa đủ màu nở tung trên đầu nhóm Subaru. Không một tiếng động.
 
 「Cái……」
@@ -303,7 +303,7 @@ Hắn đổi sang chiếc mặt nạ giận dữ, nhìn qua nhìn lại Subaru v
 
 「Khà ha, tình cờ ngẫu nhiên thôi, vì nhóc con đáng yêu yêu dấu của mày đã dặn tao rồi! Không thì vừa qua cửa tới chỗ lạ đã bị bảo làm đi, sao tao ứng phó nổi!」
 
-「……Đúng vậy. Chẳng biết phải cảm ơn Beako thế nào cho đủ.」
+「……Đúng vậy. Với Beako thì tôi chỉ biết cúi đầu chịu ơn.」
 
 Có lẽ ngay cả khi chữa cho 『Hắc Cẩu』, cô vẫn luôn chú ý đường kết nối khế ước với Subaru, chuẩn bị sẵn sàng để đáp ứng tức thì nếu cậu tác động tới.
 Nhờ vậy, ngay sau khi Ferris kéo cậu khỏi cửa tử, cô đã dựa vào 『Trái tim Sư Tử』 trong tòa thành vừa được giải 『Đường vòng』, gửi viện quân tới bằng 『Vượt cửa』 thân thuộc ngày nào.
@@ -329,7 +329,7 @@ Dù hẳn đã hiểu, Ferris không nhắc tới. Crusch cau mày vì điều �
 「Chính vì vậy tôi mới nói đấy! Nhát chém hẳn không tệ, nhưng tay có nối được không!?」
 
 Anh đã cố tình để sau, hẳn phải có tính toán sẽ chữa được. Nhưng Ferris không nói rõ, cứ mặc Crusch sốt ruột.
-Tuy vẫn chưa hẳn trở lại như cũ, Subaru có cảm giác ở đó hiện lên chút không khí giữa hai người ngày trước, ít nhất cũng gần như hồi ở Priestella.
+Tuy vẫn chưa hẳn trở lại như cũ, Subaru có cảm giác ở đó hiện lên chút không khí giữa hai người ngày trước, ít nhất cũng gần như hồi ở Pristella.
 Nhưng ngay lúc ấy……
 
 「……Chúng mày thân mật vui vẻ cái gì đấy, hả.」

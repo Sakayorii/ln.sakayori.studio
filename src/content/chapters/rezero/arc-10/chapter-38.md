@@ -5,8 +5,8 @@ chapter: 38
 title: "Bạch Dương"
 ---
 
-Đầu Subaru rơi xuống sàn, đánh cộp một tiếng.
-Nhìn cái đầu rơi mạnh xuống, không chút gì che đỡ ấy, Felix lập tức nghĩ theo trực giác. Nguy rồi.
+Đầu Subaru đập xuống sàn, đánh cộp một tiếng.
+Nhìn đầu cậu đập mạnh xuống mà không có gì che đỡ, Felix lập tức nghĩ theo trực giác. Nguy rồi.
 
 「……」
 
@@ -104,7 +104,7 @@ Ngày trước, sự ngạo mạn của Felix đã khiến cậu bỏ lỡ cơ h
 
 Ngày trước, sự chểnh mảng của Felix đã khiến cậu không cứu được người bạn thân mà mình hết lòng kính yêu. Được tâng bốc là 『Thanh』, nhưng tài năng không xứng với danh tiếng ấy, cậu đã để người trong lòng chủ nhân tuột khỏi tay.
 
-Ngày trước, sự chuộc tội của Felix đã hai lần không thể đến được với chủ nhân quan trọng hơn tính mạng. Và ngay lúc này, sự bất lực của bản thân lại sắp gây ra lần phản bội thứ ba đối với chủ nhân.
+Ngày trước, những nỗ lực chuộc tội của Felix đã hai lần không đến được với chủ nhân mà cậu coi trọng hơn cả mạng sống. Và ngay lúc này, sự bất lực của bản thân lại sắp gây ra lần phản bội thứ ba đối với chủ nhân.
 
 「Chuyện ấy, đừng có đùa… Đừng có đùa như thế…!」
 
@@ -236,7 +236,7 @@ Bởi vì…
 
 「Ừ, nhờ cô dùng. …Xét về độ gây sốc thì phải là dao nhỉ…」
 
-Cô cho cậu xem hai vũ khí giấu trong ngực áo: một cây gậy dài cỡ dùi cui và một con dao ngắn có hình dáng như dao sinh tồn. Subaru nghĩ thứ thứ hai mới phù hợp với mục đích.
+Cô cho cậu xem hai vũ khí giấu trong ngực áo: một cây gậy dài cỡ dùi cui và một con dao ngắn có hình dáng như dao sinh tồn. Subaru nghĩ con dao mới phù hợp với mục đích.
 Rồi cậu nói với 『Bạch Dương』 đang bối rối trước vẻ mặt khó coi của mình.
 
 「Khi gặp 『Ái Tử』, cô dùng con dao ấy đâm tôi. Làm đến mức đó, chẳng phải sẽ tăng sức thuyết phục lên đáng kể sao?」
@@ -255,7 +255,7 @@ Rồi cậu nói với 『Bạch Dương』 đang bối rối trước vẻ mặ
 
 「Xin hãy đợi đã!」
 
-Tiếng kêu ấy khiến cái miệng đang nói một tràng thật nhanh để trình bày kế hoạch phải khép lại.
+Tiếng kêu ấy khiến Subaru ngừng lại giữa lúc đang nói một tràng thật nhanh để trình bày kế hoạch.
 『Bạch Dương』 vừa lớn tiếng chuyển bàn tay đang đặt trên miệng xuống ngực, cảm nhận nhịp đập bằng lòng bàn tay, nhìn Subaru bằng đôi mắt rưng rưng. Quả nhiên, cậu đã yêu cầu quá đáng.
 Vốn cậu biết 『Bạch Dương』 là người dịu dàng, ghét tranh chấp. Dù là kế hoạch, bảo cô đâm Subaru cũng quá tàn nhẫn…
 
@@ -304,7 +304,7 @@ Nỗ lực đáng trân trọng ấy hẳn là thật. Cô đã tránh tiếp x�
 
 「Là Russell-san chỉ thị nhỉ. Không chỉ vì 『Bạch Dương』-chan từng là 『Ái Tử』, mà còn vì có năng lực ấy nên ông ta mới hết sức trọng dụng. Nghe cô nói thì hợp lý rồi.」
 
-Thảo nào một người như Russell lại xem 『Bạch Dương』, cô gái rõ ràng có tính cách không thích hợp, là một trong những lực lượng chủ chốt chiến đấu chống 『Lục Thiệt』. Nói cách khác, cô là người giăng bẫy tình với tỷ lệ thành công cực cao mà chẳng cần dùng đến sắc đẹp quyến rũ.
+Thảo nào một người như Russell lại xem 『Bạch Dương』, cô gái rõ ràng có tính cách không thích hợp, là một trong những lực lượng chủ chốt trong cuộc chiến của 『Lục Thiệt』. Nói cách khác, cô là người giăng bẫy tình với tỷ lệ thành công cực cao mà chẳng cần dùng đến sắc đẹp quyến rũ.
 
 「Và kế hoạch vừa rồi cũng là kết quả của việc tôi bị 『Bạch Dương』-chan mê hoặc.」
 
@@ -377,12 +377,12 @@ Và cô sẽ dùng lòng can đảm vừa có được ấy để đâm Subaru.
 「Melty Pristis. Đó là tên tôi.」
 
 Trước Subaru đang mở tròn mắt, 『Bạch Dương』, không, Melty Pristis, nở nụ cười.
-Đó là gương mặt của một cô gái dù trong lòng còn nhút nhát, vẫn quyết định gom hết can đảm chống lại. Khiến Subaru bất ngờ bằng nụ cười và lời xưng tên ấy, cô siết bàn tay đang nắm lấy tay cậu.
+Đó là gương mặt của một cô gái dù trong lòng còn sợ hãi, vẫn quyết định dốc hết can đảm để chống lại. Khiến Subaru bất ngờ bằng nụ cười và lời xưng tên ấy, cô siết bàn tay đang nắm lấy tay cậu.
 
 「Đây là lần đầu tôi có bạn, cũng là lần đầu tôi đâm bạn mình!」
 
-Một lời tuyên bố thật là dũng mãnh của người bạn mới.
-Và sau đó, 『Vụ án mạng Natsuki Subaru dàn dựng』 được quyết định thi hành…
+Một lời tuyên bố thật là hùng hồn của người bạn mới.
+Thế là, họ quyết định thực hiện 『Vụ án mạng Natsuki Subaru dàn dựng』…
 
 △▼△▼△▼△
 
@@ -412,7 +412,7 @@ Những con sóng lớn, cơn bão lớn của cảm xúc mãnh liệt không t�
 
 「Tôi đã lựa chọn. Để tôi cũng có thể thực hiện nguyện vọng của mình.」
 
-Melty nói vậy rồi đâm vào hông Subaru, diễn xuất xuất thần. Chắc chắn cô sẽ là ứng viên hàng đầu cho giải nữ diễn viên Oscar. Quả nhiên, người phụ nữ có gan rời khỏi 『Ái Tử』 thật khác biệt.
+Màn diễn của Melty khi nói vậy rồi đâm vào hông Subaru thật xuất thần. Chắc chắn cô sẽ là ứng viên hàng đầu cho giải nữ diễn viên Oscar. Quả nhiên, người phụ nữ có gan rời khỏi 『Ái Tử』 thật khác biệt.
 Và đúng như mong đợi, cô thành công tiến tới gần ả ma cuồng ghép đôi đang khống chế nơi này.
 
 「Tôi là Melty. Cô có thể cho tôi biết tên không?」

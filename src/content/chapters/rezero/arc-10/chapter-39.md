@@ -109,12 +109,12 @@ Luồng sáng vừa rồi nằm ngoài dự tính của hắn, cả hai đều b
 
 Khoảnh khắc nghe thấy giọng nói quen thuộc đã nghe biết bao lần, Crusch cảm giác lông tóc toàn thân dựng đứng.
 
-Đầu tiên là nhẹ nhõm, kế đó lập tức là ý thức về việc mình phải làm, rồi mới đến bất an và sợ hãi. Crusch đè nghiến tất cả những cảm xúc vừa dấy lên, dốc hết sức đẩy bật gã trước mặt. Hắn lập tức nhảy lùi, và cô vung kiếm về phía hắn, tung ra Bách Nhân Nhất Thái Đao.
+Đầu tiên là nhẹ nhõm, kế đó lập tức là ý thức về việc mình phải làm, rồi mới đến bất an và sợ hãi. Crusch ghìm tất cả những cảm xúc vừa dấy lên, dốc hết sức đẩy bật gã trước mặt. Hắn lập tức nhảy lùi, và cô vung kiếm về phía hắn, tung ra Bách Nhân Nhất Thái Đao.
 Luồng kiếm phong quét ngang hành lang, không để lại đường tránh. Gã tặc lưỡi 「Chậc!」, vung lưỡi kéo chém thủng trần rồi thoát lên trên. Đòn đánh đã bị né. Nhưng cô đã tạo được một khoảng trống.
 
 「Ferris...!」
 
-Crusch xoay mũi kiếm vừa vung hết đà xuống dưới, điên cuồng dồn những nhát chém liên tiếp vào sàn.
+Crusch hướng thanh kiếm vừa vung hết đà xuống dưới, dữ dội dồn những nhát chém liên tiếp vào sàn.
 Mũi kiếm hóa thành gió, khắc lên những phiến đá trắng các đường cắt như vẽ một ngôi sao. Đúng lúc đó, trần ngay trên đầu bị chém mở, gã đàn ông vừa khuất khỏi tầm mắt bổ xuống một đòn thẳng từ trên cao. Không một tiếng động.
 Cô giơ kiếm qua đầu đỡ đòn. Đôi mắt đỏ của hắn và 『Mắt rồng』 giao nhau.
 
@@ -276,7 +276,7 @@ Nếu khác biệt chỉ nằm ở sớm hay muộn, vậy thì chi bằng...
 
 「Ngẩng đầu lên! Crusch Karsten!!」
 
-Trong tích tắc, tiếng gọi tuyệt vọng xông vào thế giới thinh lặng, khiến cánh tay sắp dừng lại chuyển động lần nữa.
+Trong tích tắc, tiếng gọi khẩn thiết xông vào thế giới thinh lặng, khiến cánh tay sắp dừng lại chuyển động lần nữa.
 Cô gạt đòn. Vẫn ngoan cố chưa chịu chết. Tiếng gọi ấy khiến cô gạt được đòn đánh. Chẳng có chút thanh thản chấp nhận nào. Điều gì đã khiến cô làm vậy?
 Đó là...
 

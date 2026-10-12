@@ -137,14 +137,14 @@ Crusch dù nóng đầu vì 『Vỡ bờ』 thì cũng phải hiểu được ch
 Họ tưởng mình đang hướng tới đích, nhưng chẳng thể nào đến gần được. Cảm giác về khoảng cách và phương hướng đã bị làm cho rối loạn. Tưởng đang chạy trên đường ray này, họ lại chạy trên đường ray bên cạnh.
 Vì thế, nhóm Subaru... Không, có lẽ chẳng ai trong số đồng đội đến được nơi mình muốn tới.
 
-「...Này, thế này âm thầm mà nguy hiểm đấy.」
+「...Này, thoạt trông chẳng có gì mà nguy hiểm thật đấy.」
 
 Cậu đã suy đoán năng lực của đối phương từ những chuyện xảy ra. Từng sức mạnh riêng lẻ có vẻ chẳng quá đáng sợ, vậy mà chọn đúng hoàn cảnh rồi kết hợp với nhau lại có thể gây khó chịu đến tận mức này sao?
 Quả là những đứa con của Capella. Nếu nói về làm chuyện khiến người ta căm ghét, đứa nào cũng có tài.
 
 「À, cô đã rời khỏi đó rồi nên không tính nhé, 『Bạch Dương』. Riêng cô không tính. Còn 『Hắc Cẩu』 thì tôi chưa quyết định...」
 
-「Có lẽ chúng ta nên xem lại tiền đề.」
+「Có lẽ chúng ta nên xem lại những gì mình đang mặc định.」
 
 「Hả?」
 
@@ -208,7 +208,7 @@ Dù đã tìm được cách không bị 『Lạc lối』 mê hoặc, nơi này
 
 「Nhưng như thế cũng vẫn chậm chạp thôi, nhỉ. Hơn nữa, bị làm cho đi lạc quá lâu, chúng ta đã xa nhóm Beako hơn rồi. Đi đến tận đó thì...」
 
-「Lúc này, không thể coi là thực tế được sao?」
+「Lúc này thì khó mà làm được, đúng không?」
 
 『Bạch Dương』 theo kịp kết luận trong suy nghĩ của cậu và hỏi vậy. Subaru gật đầu.
 Trước mắt, họ vẫn cần gấp rút gặp lại nhóm Beatrice, nhưng ngay cả dùng cách vừa tìm được, cậu cũng không đoán được sẽ mất bao lâu mới tới nơi.
@@ -264,7 +264,7 @@ Subaru đã học được điều ấy qua vô số thất bại, và lần nà
 
 Chính vì đã trải qua tất cả những điều ấy, Subaru mới có thể nói rằng lúc cần ra tay nhất định sẽ tới.
 
-「Hãy cho họ thấy sự cứng cỏi của chúng ta ngay tại đây. Để chúng ta còn có thể nhìn mặt những đồng đội quan trọng của mình.」
+「Hãy cho họ thấy quyết tâm của chúng ta ngay tại đây. Để chúng ta còn có thể nhìn mặt những đồng đội quan trọng của mình.」
 
 「Tôi...」
 
@@ -338,7 +338,7 @@ Tuy nhiên, sức mạnh ấy cũng có một điểm yếu. Đó là sự yếu
 Bỏ qua người phụ nữ đang uốn éo, cậu nhìn quanh. Nơi này hẳn vẫn ở trong Thành Kugelschreiber, nhưng là một không gian cậu chưa từng thấy. Nó giống một chiếu nghỉ thường có trong thành hay dinh thự, nhưng những bức tường cao không có lấy một cửa sổ. Có lẽ là dưới tầng hầm.
 Tại tầng hầm ấy, Felix đang bị giam cầm. Hai cánh tay giơ qua đầu cậu bị đâm xuyên, đúng nghĩa như xiên vào que, ghim chặt cậu lên tường.
 
-「Tức thật, nhưng đây đúng là cách khống chế được trọn điểm...」
+「Tức thật, nhưng cách khống chế này đáng được điểm tuyệt đối...」
 
 Như đã nói, cơ thể Felix luôn hồi phục về trạng thái hoàn hảo. Nhưng khi đang bị một lưỡi dao đâm xuyên, cậu không thể chữa vết thương mà không xử lý lưỡi dao ấy trước.
 Và Felix đang bị treo lên bởi hai cánh tay bị đâm xuyên cũng không có đủ sức lực để rút nó ra, giành lại tự do.
@@ -395,7 +395,7 @@ Subaru lần đầu gặp cô ta không buồn giấu vẻ phát ngán, thủ s�
 
 「Còn có lòng can đảm nữa! Vào bước đường cùng thì thứ này đáng tin lắm! Với lại, tôi còn có một quân bài để dành...」
 
-Có lẽ cậu định nói như vậy.
+Có lẽ cậu định nói mình còn một quân bài như thế.
 Trước cảnh tượng như ác mộng, Subaru và Bellaris cùng nhau la hét ầm ĩ, Felix thậm chí bắt đầu nghi ngờ đây có thật là hiện thực hay không.
 
 Chính vì thế mà cậu không kịp hiểu chuyện xảy ra ngay khoảnh khắc tiếp theo.

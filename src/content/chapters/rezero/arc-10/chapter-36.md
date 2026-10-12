@@ -30,7 +30,7 @@ Cậu cũng nhận ra, tự lúc nào, giữa tầm nhìn cứ xoay mãi, tất 
 
 「Tỉnh lại đi! Subaru!」
 
-Má bị vỗ bôm bốp, vai bị lay, tất cả những gì đang xảy ra đều đổi mới.
+Má bị vỗ bôm bốp, vai bị lay, tất cả những gì đang xảy ra đều đổi khác.
 Suốt mãi, suốt mãi, cậu chỉ xoay không ngừng trong cơn khát, cơn đói. Cuối cùng chuyện ấy cũng bị ngắt quãng, và 『Rubasu Kitsuna』, hay 『Tsukiba Rusuna』? 『Sutsuba Rukina』? 『Rutsusu Kinaba』? 『Bakitsu Rusuna』? Barusu đã quay trở lại.
 
 Ngoạn mục! Từ không gian xoay không ngừng! Cậu đã quay trở lại!
@@ -42,7 +42,7 @@ Ngoạn mục! Từ không gian xoay không ngừng! Cậu đã quay trở lại
 「Thế này mà đùa được sao! 『Hắc Cẩu』, khanh cũng giúp đi! Giữ tay cậu ấy lại!」
 
 Xung quanh hơi ồn ào, nhưng thôi đừng vòng vo nữa. Barusu đang khỏe khoắn, tràn trề sức sống, nên dẫu xung quanh cuống quýt thế nào, cậu cũng chẳng hoa mắt chóng mặt đâu.
-U ha ha ha, nhìn quanh mà xem, xung quanh Barusu này là những người xung quanh đang vây quanh cậu, ai cũng mang gương mặt hết sức nghiêm túc. Xoay vòng. Không xoay vòng. Đã bảo không xoay mà!
+U ha ha ha, nhìn quanh mà xem, xung quanh Barusu này là những người xung quanh đang vây quanh cậu, ai cũng mang vẻ mặt đang cố hết sức. Xoay vòng. Không xoay vòng. Đã bảo không xoay mà!
 
 「Natsuki Subaru, thả lỏng bàn tay đi. Cứ thế này thì tay Beatrice sẽ……」
 
@@ -206,7 +206,7 @@ Tiếng vỗ má, tiếng nghiến răng, tiếng bước chân loạng choạng
 
 「……」
 
-Có một cú đâm.
+Một chấn động ập tới.
 Nếu diễn bằng âm thanh thì là phập, tiếp theo là phì phụt, tiếng thét bật lên là á á á. Thực tế, Barusu đã lãnh một cú phập, máu phì phụt phun ra, cậu thét á á á.
 Chỉ là chẳng có thứ nào thành âm thanh, Barusu chỉ quằn quại lặng lẽ tại đó, như buổi chiếu một bộ phim câm cũ với cuộn phim quay lạch cạch.
 
@@ -239,7 +239,7 @@ Toàn bộ những gì vừa xảy ra đều không có âm thanh, như một bu
 Nguy hiểm. Chạy đi. Có kẻ địch.
 Tất cả đều chẳng tới được bất kỳ ai. Chẳng tới được ai, Barusu, Subaru, cứ rơi xuống.
 
-Xoay tròn, rơi xuống nơi chẳng phải bầu trời hay bất cứ thứ gì, nơi cậu đã mất hàng giờ, hàng ngày để chết vì ngạt do thiếu dưỡng khí, chết khát vì cạn nước, hay chết yếu vì kiệt sức, tóm lại là một trong những cách ấy.
+Xoay tròn, rơi xuống nơi chẳng phải bầu trời hay bất cứ thứ gì, nơi cậu đã mất hàng giờ, hàng ngày để chết ngạt vì thiếu dưỡng khí, chết khát vì cạn nước, hay lả đi mà chết vì kiệt sức, tóm lại là một trong những cách ấy.
 
 Không một tiếng động.
 
@@ -322,7 +322,7 @@ Ferris đi cuối đoàn. Nhưng tới ngay trước đó anh ấy vẫn tham gi
 
 「Ơ? À, không, chuyện ấy giờ không liên quan……」
 
-Phản ứng ngay khoảnh khắc trở lại sau 『Trở về từ cõi chết』, có thể gọi là ở điểm nối giữa 『Chết』 và 『Sống』, là điều cả Subaru lẫn những người thân thiết như Emilia đều chẳng giải thích được.
+Phản ứng ngay khoảnh khắc trở lại sau 『Trở về từ cõi chết』, có thể gọi là ở điểm nối giữa 『Chết』 và 『Sống』, có những phần ngay cả Subaru cũng không giải thích được với những người thân thiết như Emilia.
 Nhưng để chuyện ấy gây nhiễu thì không ổn. Thực tế, nó là một cái hố thoạt nhìn có vẻ liên quan đến tình hình hiện tại mà lại chẳng liên quan, đào sâu cũng vô nghĩa.
 Thế nhưng……
 
@@ -396,9 +396,9 @@ Nhưng xét cho cùng, đó chỉ là lý lẽ của 『Lục Thiệt』.
 「Sửa lại một điều trong suy nghĩ của khanh đi, 『Hắc Cẩu』.」
 
 Crusch nói, gạt bàn tay 『Hắc Cẩu』 trên vai đi, quay thẳng về phía trước.
-Rồi vẫn quay lưng với 『Hắc Cẩu』 và nhóm Subaru, cô nói thẳng.
+Rồi nhìn thẳng 『Hắc Cẩu』, vẫn quay lưng với nhóm Subaru, cô nói.
 
-「Ta có quan hệ hợp tác với các khanh, chứ không trở thành cấp dưới. Ta có quyền hành động theo phán đoán của mình, và phán đoán ấy không cho phép ta bỏ mặc Ferris ở đây.」
+「Ta có quan hệ hợp tác với các khanh, chứ không phải cấp dưới của các khanh. Ta có quyền hành động theo phán đoán của mình, và phán đoán ấy không cho phép ta bỏ mặc Ferris ở đây.」
 
 Khẳng định dứt khoát như vậy, cô bước một bước lên trước.
 Không bỏ mặc Ferris. Đó là điều đương nhiên, nhưng lời khẳng định ấy vẫn khiến Subaru vui mừng. Bởi cậu cũng nghĩ giống Crusch……
@@ -531,7 +531,7 @@ Nhưng đợt sụp đổ không tới được đây. Không, có vẻ nó đã
 
 「Beako…… phải rồi. Tôi vẫn cảm nhận được mối liên kết, dù chỉ mờ nhạt.」
 
-Nhắm mắt nén cảm xúc dâng trào, cậu kiểm chứng điều 『Bạch Dương』 vừa nói. Đường kết nối giữa tinh linh và khế ước giả vẫn bảo đảm mối liên hệ với Beatrice, dù khoảng cách xa xôi.
+Nhắm mắt nén cảm xúc dâng trào, cậu kiểm chứng điều 『Bạch Dương』 vừa nói. Đường kết nối giữa tinh linh và người lập khế ước vẫn bảo đảm mối liên hệ với Beatrice, dù khoảng cách xa xôi.
 Đó cũng là bằng chứng cô vẫn bình an. Nhưng chỉ là hiện tại vẫn bình an.
 
 「Khốn kiếp, đã biết có kẻ địch rồi, sao còn dễ dàng để thành ra thế này……」
